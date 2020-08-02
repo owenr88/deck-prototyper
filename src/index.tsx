@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { ThemeProvider } from 'styled-components'
+
+import 'antd/dist/antd.css';
+
+import theme from './styles/theme';
+import { DataContextProvider } from './data/DataContext';
+
+import App from './scenes/Main/MainScene';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <DataContextProvider>
+        <App />
+      </DataContextProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

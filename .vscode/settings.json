@@ -1,0 +1,32 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "stylelint.config": null,
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "prompt",
+  "prettier.jsxSingleQuote": true,
+  "prettier.useTabs": false,
+  "prettier.useEditorConfig": false,
+  "prettier.packageManager": "yarn",
+  "eslint.packageManager": "yarn",
+  "eslint.validate": [
+    "html",
+    "typescript",
+    "javascript"
+  ]
+}
