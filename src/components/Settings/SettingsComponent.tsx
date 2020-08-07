@@ -4,47 +4,63 @@ import { ImportOutlined } from '@ant-design/icons';
 
 import { ConfigPages } from '../../types';
 import DataContext from '../../data/DataContext';
+import DrawerContext from '../../data/DrawerContext';
+import useImport from '../../hooks/useImport';
 
 interface SettingsProps {
-  drawerPages: ConfigPages[]
-  onClose: () => void
 }
 
-const Settings: React.FC<SettingsProps> = ({ drawerPages, onClose }) => {
+const Settings: React.FC<SettingsProps> = () => {
   const { exportData } = useContext(DataContext);
+  const { hasPage, togglePage } = useContext(DrawerContext);
+  const { importFile, importing } = useImport();
 
   const handleExport = async (e: any) => {
     try {
       await exportData();
-    message.success('Settings exported successfully.');
+      message.success('Settings exported successfully.');
     } catch(e) {
       message.error(e.message);
     }
   }
 
-  const handleImport = (info: any) => {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
+  const req = async (info: any) => {
+    console.log(info)
+    try {
+      await importFile(info.file);
+      info.onSuccess('ok');
+    } catch(e) {
+      info.onError(e);
     }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  };
+  }
+
+  // const handleImport = (info: any) => {
+  //   const { status } = info.file;
+  //   if (status === 'done') {
+  //     importFile(info.file)
+  //     message.success(`${info.file.name} file uploaded successfully.`);
+  //   } else if (status === 'error') {
+  //     console.error(info.file.error)
+  //     message.error(`${info.file.name} file upload failed.`);
+  //   } else {
+  //     console.log(info.file);
+  //   }
+  //   return false;
+  // };
 
   return <Modal
   title="Import/Export data"
-  visible={drawerPages.includes(ConfigPages.SETTINGS)}
-  onOk={onClose}
+  visible={hasPage(ConfigPages.SETTINGS)}
+  onOk={() => togglePage(ConfigPages.SETTINGS)}
   okText="Done"
-         >
-           <Upload.Dragger 
-           name="file"
-           multiple={false}
-           onChange={handleImport}
-           >
+    >
+    <Upload.Dragger 
+      accept='.csv'
+      name="file"
+      multiple={false}
+      // onChange={handleImport}
+      customRequest={req}
+    >
     <p className="ant-upload-drag-icon">
     <ImportOutlined />
     </p>

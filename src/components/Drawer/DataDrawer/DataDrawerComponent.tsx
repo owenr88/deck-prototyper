@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
 import { Drawer, Table } from 'antd';
 
-import { ConfigPages } from '../../types';
-import DataContext from '../../data/DataContext'
+import { ConfigPages } from '../../../types';
+import DataContext from '../../../data/DataContext'
+import DrawerContext from '../../../data/DrawerContext'
 
 interface DrawerDecksProps {
-  drawerPages: ConfigPages[]
-  onClose: () => void
 }
 
-const DrawerData: React.FC<DrawerDecksProps> = ({ drawerPages, onClose }) => {
+const DrawerData: React.FC<DrawerDecksProps> = () => {
   const { cards, decks } = useContext(DataContext);
+  const { pages, hasPage, togglePage } = useContext(DrawerContext);
 
   const columns = [
     {
@@ -43,10 +43,10 @@ const DrawerData: React.FC<DrawerDecksProps> = ({ drawerPages, onClose }) => {
     placement="right"
     width={'70%'}
     closable={true}
-    visible={drawerPages.includes(ConfigPages.DATA)}
-    onClose={onClose}
+    visible={hasPage(ConfigPages.DATA)}
+    onClose={() => togglePage(ConfigPages.DATA)}
     maskClosable={false}
-    mask={drawerPages.length < 2}
+    mask={pages.length < 2}
          >
     <Table 
       columns={columns}

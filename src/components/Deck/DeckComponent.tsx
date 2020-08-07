@@ -7,7 +7,7 @@ import DataContext from '../../data/DataContext';
 
 import { DeckType, CardType } from '../../types';
 import CardFront from '../CardFront';
-import CardBack from '../CardBack';
+import CardBack from '../Card/CardBack';
 
 interface DeckComponentsProps {
   deck: DeckType;

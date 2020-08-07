@@ -7,12 +7,15 @@ import { ConfigPages } from '../../types'
 
 import Nav from '../../components/Nav'
 import CardPreviewer from '../../components/CardPreviewer'
-import DrawerDecks from '../../components/DrawerDecks';
-import DrawerData from '../../components/DrawerData';
+import { DecksDrawer, DataDrawer } from '../../components/Drawer';
 import Settings from '../../components/Settings';
 
+import DrawerContext from '../../data/DrawerContext';
+
 const Page = styled(Layout)`
-  background: ${({ theme }) => theme.colors.main};
+  background: ${({ theme }) => theme.colors.main}; /* fallback for old browsers */
+  background: -webkit-linear-gradient(${({ theme }) => theme.colors.gradient}); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(${({ theme }) => theme.colors.gradient}); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   min-height: 100vh;
 `
 
@@ -26,27 +29,16 @@ const Container = styled(Layout.Content)`
 `
 
 function App() {
-  const [ drawerPages, setDrawerPages ] = useState<ConfigPages[]>([]);
-
-  const toggleDrawer = (page: ConfigPages) => {
-    if( drawerPages.includes(page) ) {
-      setDrawerPages(without(drawerPages, page))
-    } else {
-      setDrawerPages([
-        ...drawerPages,
-        page
-      ])
-    }
-  }
+  // const { pages, hasPage } = useContext(DrawerContext);
 
   return (
     <Page>
       <Container>
-        <Nav onSelect={toggleDrawer} />
+        <Nav />
         <CardPreviewer />
-        <DrawerDecks drawerPages={drawerPages} onClose={() => toggleDrawer(ConfigPages.DECKS)} />
-        <DrawerData drawerPages={drawerPages} onClose={() => toggleDrawer(ConfigPages.DATA)} />
-        <Settings drawerPages={drawerPages} onClose={() => toggleDrawer(ConfigPages.SETTINGS)} />
+        <DecksDrawer />
+        <DataDrawer />
+        <Settings />
       </Container>
     </Page>
   );

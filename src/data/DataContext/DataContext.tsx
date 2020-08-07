@@ -41,6 +41,12 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     card.decks.map((number) => (decks.find((d) => d.number === number)?.title))
   )
 
+  // const fillCardsWithDummyData = (decks: DeckType[]): CardType[] => {
+  //   const cards = makeCards(10, decks)
+  //   saveCards(cards);
+  //   return cards;
+  // }
+
   const exportData = async () => {
     let decksContent = 'data:text/csv;charset=utf-8,';
     decksContent += ['number', 'title', 'description', 'color'].join(',')+'\n'

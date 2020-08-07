@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 
 import theme from './styles/theme';
 import { DataContextProvider } from './data/DataContext';
+import { DrawerContextProvider } from './data/DrawerContext';
 
 import App from './scenes/Main/MainScene';
 import * as serviceWorker from './serviceWorker';
@@ -14,7 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <DataContextProvider>
-        <App />
+        <DrawerContextProvider>
+          <App />
+        </DrawerContextProvider>
       </DataContextProvider>
     </ThemeProvider>
   </React.StrictMode>,

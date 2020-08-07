@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { OrderedListOutlined, IdcardOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { ConfigPages } from '../../types'
+import DrawerContext from '../../data/DrawerContext';
 
-const Top = styled.div`
+type TopProps = {
+  open: boolean;
+}
+
+const Top = styled.div<TopProps>`
   position: fixed;
   bottom: 30px;
   left: auto;
@@ -12,7 +17,8 @@ const Top = styled.div`
   z-index: 1001;
   display: flex;
   flex-direction: row;
-  background: ${({ theme }) => theme.colors.main};
+  transition: background 1s;
+  background: ${({ theme, open }) => open ? theme.colors.navStrong : theme.colors.nav};
   padding: 0 20px;
   border-radius: 20px;
 `
@@ -23,19 +29,20 @@ const IconItem = styled.div`
 `
 
 interface NavProps {
-  onSelect: (page: ConfigPages) => void;
 }
 
-const NavComponent: React.FC<NavProps> = ({ onSelect }) => {
-	return <Top>
+const NavComponent: React.FC<NavProps> = () => {
+  const { hasPage, togglePage } = useContext(DrawerContext);
+
+	return <Top open={hasPage(ConfigPages.DATA)}>
     <IconItem>
-      <IdcardOutlined onClick={() => onSelect(ConfigPages.DECKS)} />
+      <IdcardOutlined onClick={() => togglePage(ConfigPages.DECKS)} />
     </IconItem>
     <IconItem>
-      <OrderedListOutlined onClick={() => onSelect(ConfigPages.DATA)} />
+      <OrderedListOutlined onClick={() => togglePage(ConfigPages.DATA)} />
     </IconItem>
     <IconItem>
-      <SettingOutlined onClick={() => onSelect(ConfigPages.SETTINGS)} />
+      <SettingOutlined onClick={() => togglePage(ConfigPages.SETTINGS)} />
     </IconItem>
   </Top>;
 }
