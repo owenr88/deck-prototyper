@@ -11,7 +11,7 @@ const CardStyledBasic = styled(Card)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 interface TitleStyledprops {
   color: string;
@@ -21,22 +21,19 @@ interface TitleStyledprops {
 const Title = styled(Typography.Paragraph)<TitleStyledprops>`
   color: ${(props) => props.color || props.theme.colors.text}!important;
   font-size: 14pt;
-`
+`;
 
 // interface CardBasicProps {
 //   children?: React.ReactNode;
 // }
 
 const CardBasic: React.FC<any> = ({ children, title, textColor, ...props }) => {
-	return (
-    <CardStyledBasic 
-      bordered={false}
-      {...props}
-    >
+  return (
+    <CardStyledBasic bordered={false} {...props}>
       <Title color={textColor}>{title}</Title>
       {children}
     </CardStyledBasic>
   );
-}
+};
 
 export default CardBasic;

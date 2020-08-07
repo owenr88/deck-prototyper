@@ -8,11 +8,11 @@ import CardBase from '../CardBase';
 
 type CardBackStylesProps = {
   deck?: DeckType;
-}
+};
 
 const CardBackStyled = styled(CardBase)<CardBackStylesProps>`
   background: ${(props) => props.deck?.color || '#FFFFFF'};
-`
+`;
 
 interface CardBackProps {
   deck?: DeckType;
@@ -20,14 +20,14 @@ interface CardBackProps {
 }
 
 const CardBack: React.FC<CardBackProps> = ({ deck, onClick }) => {
-	return (
-    <CardBackStyled 
+  return (
+    <CardBackStyled
       deck={deck}
       title={deck?.title ?? ''}
       onClick={() => onClick()}
       textColor={getCorrectTextColor(deck?.color || '#FFFFFF')}
     />
   );
-}
+};
 
 export default CardBack;

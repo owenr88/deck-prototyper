@@ -16,44 +16,41 @@ interface DeckComponentsProps {
 const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
   const { cards } = useContext(DataContext);
 
-  const [ cardsInDeck, setCardsInDeck ] = useState<CardType[]>([]);
-  const [ cardsDiscarded, setCardsDiscarded ] = useState<CardType[]>([]);
+  const [cardsInDeck, setCardsInDeck] = useState<CardType[]>([]);
+  const [cardsDiscarded, setCardsDiscarded] = useState<CardType[]>([]);
 
   useEffect(() => {
-    if( cardsInDeck.length || cardsDiscarded.length ) return;
-    const cardsByDeck = cards.filter((card) => card.decks.includes(deck.number))
+    if (cardsInDeck.length || cardsDiscarded.length) return;
+    const cardsByDeck = cards.filter((card) =>
+      card.decks.includes(deck.number)
+    );
     setCardsInDeck(cardsByDeck);
-  }, [cards, cardsDiscarded.length, cardsInDeck.length, deck])
+  }, [cards, cardsDiscarded.length, cardsInDeck.length, deck]);
 
   const selectNextCard = () => {
-    if(!cardsInDeck.length) return;
+    if (!cardsInDeck.length) return;
     const card = sample(cardsInDeck);
-    if(!card) return;
+    if (!card) return;
     setCardsInDeck(without(cardsInDeck, card));
-    setCardsDiscarded([
-      ...cardsDiscarded,
-      card
-    ])
-  }
+    setCardsDiscarded([...cardsDiscarded, card]);
+  };
 
-	return (
+  return (
     <Wrapper>
-      <CardBack 
+      <CardBack
         deck={!!cardsInDeck.length ? deck : undefined}
         onClick={selectNextCard}
       />
       <Typography.Text>{cardsInDeck.length} remaining</Typography.Text>
-      <CardFront 
-        card={last(cardsDiscarded)}
-      />
+      <CardFront card={last(cardsDiscarded)} />
       <Typography.Text>{cardsDiscarded.length} discarded</Typography.Text>
     </Wrapper>
   );
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 export default DeckComponent;

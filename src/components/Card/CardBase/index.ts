@@ -1,2 +1,2 @@
-import CardBase from './CardBaseComponent'
+import CardBase from './CardBaseComponent';
 export default CardBase;

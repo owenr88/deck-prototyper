@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { without } from 'lodash';
 
-import { ConfigPages } from '../../types'
+import { ConfigPages } from '../../types';
 
 interface ProviderProps {
   children?: React.ReactNode;
@@ -20,21 +20,18 @@ const Context = React.createContext<CardContextProps>({
 });
 
 const DrawerContextProvider: React.FC<ProviderProps> = ({ children }) => {
-  const [ pages, setPages ] = useState<ConfigPages[]>([]);
+  const [pages, setPages] = useState<ConfigPages[]>([]);
 
   const hasPage = (page?: ConfigPages) => !!page && pages.includes(page);
 
   const togglePage = (page?: ConfigPages) => {
-    if(!page) return;
-    if( hasPage(page) ) {
-      setPages(without(pages, page))
+    if (!page) return;
+    if (hasPage(page)) {
+      setPages(without(pages, page));
     } else {
-      setPages([
-        ...pages,
-        page
-      ])
+      setPages([...pages, page]);
     }
-  }
+  };
 
   return (
     <Context.Provider

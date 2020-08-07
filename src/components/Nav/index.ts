@@ -1,2 +1,2 @@
-import NavComponent from './NavComponent'
-export default NavComponent
+import NavComponent from './NavComponent';
+export default NavComponent;

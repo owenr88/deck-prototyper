@@ -1,2 +1,2 @@
-import CardBack from './CardBackComponent'
+import CardBack from './CardBackComponent';
 export default CardBack;

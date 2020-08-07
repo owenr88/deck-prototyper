@@ -1,2 +1,2 @@
-import CardFront from './CardFrontComponent'
+import CardFront from './CardFrontComponent';
 export default CardFront;

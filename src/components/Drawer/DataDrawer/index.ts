@@ -1,2 +1,2 @@
-import DrawerData from './DataDrawerComponent'
+import DrawerData from './DataDrawerComponent';
 export default DrawerData;

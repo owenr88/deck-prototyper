@@ -1,8 +1,7 @@
-
 export enum ConfigPages {
   DECKS,
   DATA,
-  SETTINGS
+  SETTINGS,
 }
 
 export interface CardType {
@@ -14,7 +13,7 @@ export interface CardType {
 }
 
 export interface DeckType {
-  number: number
+  number: number;
   title: string;
   description: string;
   color?: string;
