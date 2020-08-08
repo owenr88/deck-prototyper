@@ -8,7 +8,8 @@ export const saveCards = (cards: CardType[]) => {
 
 export const getCards = (): CardType[] => {
   const data = localStorage.getItem(CARDS_LS_KEY);
-  return JSON.parse(data || '') as CardType[];
+  if (!data) return [];
+  return JSON.parse(data) as CardType[];
 };
 
 export const addCard = (card: CardType): void => {};

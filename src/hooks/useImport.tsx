@@ -5,7 +5,8 @@ import faker from 'faker';
 import { saveCards } from '../data/queries/cards';
 import { saveDecks } from '../data/queries/decks';
 import { DeckType, CardType } from '../types';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import DataContext from '../data/DataContext';
 
 const expectedFields = ['number', 'title', 'body1', 'body2', 'decks'];
 
@@ -121,8 +122,8 @@ const saveDecksAndCards = (
   const cardData: CardType[] = cards.map((card: CardTypeWithStringDecks) => {
     const deckNumbers = card.decks
       .map((deckName) => decks.find((d) => d?.title === deckName))
-      .map((d) => d?.number)
-      .filter(Boolean);
+      .map((d) => d?.number);
+    console.log(deckNumbers);
     return {
       ...card,
       decks: deckNumbers,
@@ -138,6 +139,7 @@ const saveDecksAndCards = (
  * Hook to import data into the app
  */
 const useImport = (): UseImportOutput => {
+  const { refetchFromLocalStorage } = useContext(DataContext);
   const [importing, setImporting] = useState(false);
 
   const importFile = async (file: File): Promise<void> => {
@@ -151,6 +153,7 @@ const useImport = (): UseImportOutput => {
       const decks = createDecksFromImportedCards(cards);
       console.log('decks', decks);
       saveDecksAndCards(decks, cards);
+      refetchFromLocalStorage();
       setImporting(false);
     } catch (e) {
       console.error(e);

@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import DataContext from '../../data/DataContext';
 
 import { DeckType, CardType } from '../../types';
-import CardFront from '../CardFront';
-import CardBack from '../Card/CardBack';
+import { CardFront, CardBack } from '../Card';
 
 interface DeckComponentsProps {
   deck: DeckType;
@@ -20,12 +19,13 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
   const [cardsDiscarded, setCardsDiscarded] = useState<CardType[]>([]);
 
   useEffect(() => {
-    if (cardsInDeck.length || cardsDiscarded.length) return;
+    // Refresh the data if it changes
     const cardsByDeck = cards.filter((card) =>
       card.decks.includes(deck.number)
     );
     setCardsInDeck(cardsByDeck);
-  }, [cards, cardsDiscarded.length, cardsInDeck.length, deck]);
+    setCardsDiscarded([]);
+  }, [cards, deck.number]);
 
   const selectNextCard = () => {
     if (!cardsInDeck.length) return;

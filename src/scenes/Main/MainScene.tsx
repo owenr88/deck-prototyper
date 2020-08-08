@@ -1,16 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
-import { without } from 'lodash';
 import styled from 'styled-components';
-
-import { ConfigPages } from '../../types';
 
 import Nav from '../../components/Nav';
 import CardPreviewer from '../../components/CardPreviewer';
 import { DecksDrawer, DataDrawer } from '../../components/Drawer';
 import Settings from '../../components/Settings';
-
-import DrawerContext from '../../data/DrawerContext';
 
 const Page = styled(Layout)`
   background: ${({ theme }) =>
@@ -34,8 +29,6 @@ const Container = styled(Layout.Content)`
 `;
 
 function App() {
-  // const { pages, hasPage } = useContext(DrawerContext);
-
   return (
     <Page>
       <Container>

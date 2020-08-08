@@ -8,7 +8,8 @@ export const saveDecks = (decks: DeckType[]) => {
 
 export const getDecks = (): DeckType[] => {
   const data = localStorage.getItem(DECKS_LS_KEY);
-  return JSON.parse(data || '') as DeckType[];
+  if (!data) return [];
+  return JSON.parse(data) as DeckType[];
 };
 
 export const addDeck = (deck: DeckType): void => {};

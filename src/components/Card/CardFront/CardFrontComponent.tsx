@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
 
-import { CardType } from '../../types';
+import { CardType } from '../../../types';
 import CardBase from '../CardBase';
 
 const CardEmptyStyled = styled(CardBase)`

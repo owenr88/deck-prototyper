@@ -4,10 +4,13 @@ import {
   OrderedListOutlined,
   IdcardOutlined,
   SettingOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 
 import { ConfigPages } from '../../types';
 import DrawerContext from '../../data/DrawerContext';
+import DataContext from '../../data/DataContext';
 
 type TopProps = {
   open: boolean;
@@ -37,6 +40,7 @@ interface NavProps {}
 
 const NavComponent: React.FC<NavProps> = () => {
   const { hasPage, togglePage } = useContext(DrawerContext);
+  const { generateRandomData } = useContext(DataContext);
 
   return (
     <Top open={hasPage(ConfigPages.DATA)}>
@@ -48,6 +52,11 @@ const NavComponent: React.FC<NavProps> = () => {
       </IconItem>
       <IconItem>
         <SettingOutlined onClick={() => togglePage(ConfigPages.SETTINGS)} />
+      </IconItem>
+      <IconItem>
+        <Tooltip title="Generate random data" placement="top">
+          <QuestionCircleOutlined onClick={() => generateRandomData()} />
+        </Tooltip>
       </IconItem>
     </Top>
   );

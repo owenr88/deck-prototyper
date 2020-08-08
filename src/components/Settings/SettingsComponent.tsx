@@ -5,14 +5,16 @@ import { ImportOutlined } from '@ant-design/icons';
 import { ConfigPages } from '../../types';
 import DataContext from '../../data/DataContext';
 import DrawerContext from '../../data/DrawerContext';
+
 import useImport from '../../hooks/useImport';
+import useExport from '../../hooks/useExport';
 
 interface SettingsProps {}
 
 const Settings: React.FC<SettingsProps> = () => {
-  const { exportData } = useContext(DataContext);
   const { hasPage, togglePage } = useContext(DrawerContext);
   const { importFile } = useImport();
+  const { exportData } = useExport();
 
   const handleExport = async (e: any) => {
     try {
