@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { Drawer, Table } from 'antd';
+import { Drawer, Table, Tag } from 'antd';
 
-import { ConfigPages } from '../../../types';
+import { ConfigPages, CardType } from '../../../types';
 import DataContext from '../../../data/DataContext';
 import DrawerContext from '../../../data/DrawerContext';
 
@@ -31,11 +31,26 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
     {
       title: 'Decks',
       dataIndex: 'decks',
-      render: (deckNumbers: number[]) =>
-        deckNumbers
-          .map((number) => decks.find((d) => d.number === number)?.title)
-          .filter(Boolean)
-          .join(', '),
+      render: (deckNumbers: number[], card: CardType) => {
+        const cardDecks = deckNumbers.map((number) =>
+          decks.find((d) => d.number === number)
+        );
+        return (
+          <>
+            {cardDecks.map((deck) => {
+              if (!deck?.title) return null;
+              return (
+                <Tag
+                  color={deck?.color}
+                  key={card.number + 'tag' + deck?.number}
+                >
+                  {deck.title.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
+        );
+      },
     },
   ];
 

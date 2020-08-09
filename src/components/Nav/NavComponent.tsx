@@ -6,11 +6,12 @@ import {
   SettingOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Tooltip, Popconfirm } from 'antd';
 
 import { ConfigPages } from '../../types';
 import DrawerContext from '../../data/DrawerContext';
 import DataContext from '../../data/DataContext';
+import useImport from '../../hooks/useImport';
 
 type TopProps = {
   open: boolean;
@@ -40,7 +41,7 @@ interface NavProps {}
 
 const NavComponent: React.FC<NavProps> = () => {
   const { hasPage, togglePage } = useContext(DrawerContext);
-  const { generateRandomData } = useContext(DataContext);
+  const { generateRandomData, hasImported } = useContext(DataContext);
 
   return (
     <Top open={hasPage(ConfigPages.DATA)}>
@@ -55,7 +56,20 @@ const NavComponent: React.FC<NavProps> = () => {
       </IconItem>
       <IconItem>
         <Tooltip title="Generate random data" placement="top">
-          <QuestionCircleOutlined onClick={() => generateRandomData()} />
+          {hasImported ? (
+            <Popconfirm
+              title="This will override any data you imported already. Are you sure?"
+              onConfirm={() => generateRandomData()}
+              onCancel={() => {}}
+              okText="Yes"
+              cancelText="No"
+              // disabled={!importedOwnCards}
+            >
+              <QuestionCircleOutlined />
+            </Popconfirm>
+          ) : (
+            <QuestionCircleOutlined onClick={() => generateRandomData()} />
+          )}
         </Tooltip>
       </IconItem>
     </Top>

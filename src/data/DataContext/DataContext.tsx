@@ -6,6 +6,11 @@ import { getCards, saveCards } from '../queries/cards';
 import { getDecks, saveDecks } from '../queries/decks';
 import { makeDecks } from '../factories/decks';
 import { makeCards } from '../factories/cards';
+import useImport from '../../hooks/useImport';
+import {
+  getHasImportedOwnCards,
+  saveHasImportedOwnCards,
+} from '../queries/has-imported';
 
 interface ProviderProps {
   children?: React.ReactNode;
@@ -15,30 +20,42 @@ interface CardContextProps {
   cards: CardType[];
   decks: DeckType[];
   fetching: boolean;
+  hasImported: boolean;
   getCardDeckNames: (decksToSearch?: number[]) => string[];
   generateRandomData: () => void;
   refetchFromLocalStorage: () => void;
+  changeHasImported: (value: boolean) => void;
 }
 
 const Context = React.createContext<CardContextProps>({
   cards: [],
   decks: [],
   fetching: true,
+  hasImported: false,
   getCardDeckNames: () => [],
   generateRandomData: () => {},
   refetchFromLocalStorage: () => {},
+  changeHasImported: () => {},
 });
 
 const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [fetching, setFetching] = useState<boolean>(true);
   const [cards, setCards] = useState<CardType[]>([]);
   const [decks, setDecks] = useState<DeckType[]>([]);
+  const [hasImported, setHasImported] = useState<boolean>(false);
+
+  const fetchHasImported = () => {
+    setHasImported(getHasImportedOwnCards());
+  };
+
+  const changeHasImported = (imported: boolean) => {
+    saveHasImportedOwnCards(imported);
+    setHasImported(imported);
+  };
 
   useEffect(() => {
-    setFetching(true);
-    setDecks(getDecks());
-    setCards(getCards());
-    setFetching(false);
+    refetchFromLocalStorage();
+    fetchHasImported();
   }, []);
 
   const getCardDeckNames = (decksToSearch?: number[]) =>
@@ -55,6 +72,7 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     saveCards(cards);
     setCards(cards);
     setFetching(false);
+    changeHasImported(false);
     return cards;
   };
 
@@ -71,9 +89,11 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
         cards,
         decks,
         fetching,
+        hasImported,
         getCardDeckNames,
         generateRandomData,
         refetchFromLocalStorage,
+        changeHasImported,
       }}
     >
       {children}
