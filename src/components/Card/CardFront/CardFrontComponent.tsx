@@ -4,8 +4,9 @@ import { Typography } from 'antd';
 
 import { CardType } from '../../../types';
 import CardBase from '../CardBase';
+import CardEmpty from '../CardEmpty';
 
-const CardEmptyStyled = styled(CardBase)`
+const CardFrontStyled = styled(CardBase)`
   background: #ffffff;
 `;
 
@@ -18,11 +19,12 @@ interface CardFrontProps {
 }
 
 const CardFront: React.FC<CardFrontProps> = ({ card }) => {
+  if (!card) return <CardEmpty />;
   return (
-    <CardEmptyStyled title={card?.title ?? ''}>
+    <CardFrontStyled title={card?.title ?? ''}>
       {card?.body1 && <Text>{card?.body1}</Text>}
       {card?.body2 && <Text>{card?.body2}</Text>}
-    </CardEmptyStyled>
+    </CardFrontStyled>
   );
 };
 

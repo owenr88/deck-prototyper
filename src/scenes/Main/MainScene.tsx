@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Nav from '../../components/Nav';
 import CardPreviewer from '../../components/CardPreviewer';
-import { DecksDrawer, DataDrawer } from '../../components/Drawer';
+import { DecksDrawer, CardsDrawer } from '../../components/Drawer';
 import Settings from '../../components/Settings';
 
 const Page = styled(Layout)`
@@ -35,7 +35,7 @@ function App() {
         <Nav />
         <CardPreviewer />
         <DecksDrawer />
-        <DataDrawer />
+        <CardsDrawer />
         <Settings />
       </Container>
     </Page>

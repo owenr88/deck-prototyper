@@ -41,7 +41,7 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
 
   return (
     <Drawer
-      title="Data"
+      title="Cards"
       placement="right"
       width={'70%'}
       closable={true}

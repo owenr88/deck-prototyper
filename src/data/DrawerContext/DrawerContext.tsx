@@ -22,10 +22,12 @@ const Context = React.createContext<CardContextProps>({
 const DrawerContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [pages, setPages] = useState<ConfigPages[]>([]);
 
-  const hasPage = (page?: ConfigPages) => !!page && pages.includes(page);
+  const hasPage = (page?: ConfigPages) =>
+    page !== undefined && pages.includes(page);
 
   const togglePage = (page?: ConfigPages) => {
-    if (!page) return;
+    if (page === undefined) return;
+    if (!ConfigPages[page]) return;
     if (hasPage(page)) {
       setPages(without(pages, page));
     } else {

@@ -1,2 +1,2 @@
-export { default as DecksDrawer } from './DecksDrawer'
-export { default as DataDrawer } from './DataDrawer'
+export { default as DecksDrawer } from './DecksDrawer';
+export { default as CardsDrawer } from './CardsDrawer';

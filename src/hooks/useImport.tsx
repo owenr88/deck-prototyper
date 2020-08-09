@@ -101,8 +101,8 @@ const createDecksFromImportedCards = (
     []
   );
   console.log(deckNames);
-  const deckData: DeckType[] = deckNames.map((title, number) => ({
-    number,
+  const deckData: DeckType[] = deckNames.map((title, i) => ({
+    number: i + 1,
     title,
     description: '',
     color: faker.internet.color(),

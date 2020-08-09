@@ -20,13 +20,14 @@ const Settings: React.FC<SettingsProps> = () => {
     try {
       await exportData();
       message.success('Settings exported successfully.');
+      return false;
     } catch (e) {
       message.error(e.message);
+      return false;
     }
   };
 
-  const req = async (info: any) => {
-    console.log(info);
+  const handleImport = async (info: any) => {
     try {
       await importFile(info.file);
       info.onSuccess('ok');
@@ -35,33 +36,19 @@ const Settings: React.FC<SettingsProps> = () => {
     }
   };
 
-  // const handleImport = (info: any) => {
-  //   const { status } = info.file;
-  //   if (status === 'done') {
-  //     importFile(info.file)
-  //     message.success(`${info.file.name} file uploaded successfully.`);
-  //   } else if (status === 'error') {
-  //     console.error(info.file.error)
-  //     message.error(`${info.file.name} file upload failed.`);
-  //   } else {
-  //     console.log(info.file);
-  //   }
-  //   return false;
-  // };
-
   return (
     <Modal
       title="Import/Export data"
       visible={hasPage(ConfigPages.SETTINGS)}
       onOk={() => togglePage(ConfigPages.SETTINGS)}
       okText="Done"
+      onCancel={() => togglePage(ConfigPages.SETTINGS)}
     >
       <Upload.Dragger
         accept=".csv"
         name="file"
         multiple={false}
-        // onChange={handleImport}
-        customRequest={req}
+        customRequest={handleImport}
       >
         <p className="ant-upload-drag-icon">
           <ImportOutlined />

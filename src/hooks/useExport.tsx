@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import Papa from 'papaparse';
 
 import DataContext from '../data/DataContext';
 
@@ -16,36 +17,26 @@ const useExport = (): UseExportOutput => {
 
   const exportData = async () => {
     setExporting(true);
-    let decksContent = 'data:text/csv;charset=utf-8,';
-    decksContent +=
-      ['number', 'title', 'description', 'color'].join(',') + '\n';
-    decksContent += decks
-      .map((deck) =>
-        [deck.number, deck.title, deck.description, deck.color].join(',')
-      )
-      .join('\n');
 
-    let cardsContent = 'data:text/csv;charset=utf-8,';
-    cardsContent +=
-      ['numner', 'title', 'body1', 'body1', 'decks'].join(',') + '\n';
-    // cardsContent += CardType['props'] // Add the headers
-    cardsContent += cards
-      .map((card) =>
-        [
-          card.number,
-          card.title,
-          card.body1,
-          card.body2,
-          getCardDeckNames(card?.decks ?? [])
-            .filter(Boolean)
-            .join(','),
-        ].join(',')
-      )
-      .join('\n');
+    const decksContent = Papa.unparse(decks);
 
-    const encodedDeckUri = encodeURI(decksContent);
+    const cardsContent = Papa.unparse(
+      cards.map((card) => ({
+        ...card,
+        decks: getCardDeckNames(card?.decks ?? [])
+          .filter(Boolean)
+          .join(','),
+      }))
+    );
+
+    const prefix = 'data:text/csv;charset=utf-8,';
+
+    console.log(prefix + decksContent);
+    console.log(prefix + cardsContent);
+
+    const encodedDeckUri = encodeURI(prefix + decksContent);
     window.open(encodedDeckUri);
-    const encodedCardsUri = encodeURI(cardsContent);
+    const encodedCardsUri = encodeURI(prefix + cardsContent);
     window.open(encodedCardsUri);
     setExporting(false);
   };

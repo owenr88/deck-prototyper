@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { without, last, sample } from 'lodash';
 import { Typography } from 'antd';
 import styled from 'styled-components';
@@ -18,8 +18,7 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
   const [cardsInDeck, setCardsInDeck] = useState<CardType[]>([]);
   const [cardsDiscarded, setCardsDiscarded] = useState<CardType[]>([]);
 
-  useEffect(() => {
-    // Refresh the data if it changes
+  const refillDeck = useCallback(() => {
     const cardsByDeck = cards.filter((card) =>
       card.decks.includes(deck.number)
     );
@@ -27,8 +26,16 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
     setCardsDiscarded([]);
   }, [cards, deck.number]);
 
-  const selectNextCard = () => {
-    if (!cardsInDeck.length) return;
+  // Refresh the data if it changes
+  useEffect(() => {
+    refillDeck();
+  }, [cards, deck.number, refillDeck]);
+
+  const selectNextCardOrReshuffle = () => {
+    if (!cardsInDeck.length) {
+      refillDeck();
+      return;
+    }
     const card = sample(cardsInDeck);
     if (!card) return;
     setCardsInDeck(without(cardsInDeck, card));
@@ -39,7 +46,8 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
     <Wrapper>
       <CardBack
         deck={!!cardsInDeck.length ? deck : undefined}
-        onClick={selectNextCard}
+        onClick={selectNextCardOrReshuffle}
+        numberOfCards={cardsInDeck.length}
       />
       <Typography.Text>{cardsInDeck.length} remaining</Typography.Text>
       <CardFront card={last(cardsDiscarded)} />
