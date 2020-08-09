@@ -10,9 +10,7 @@ const CardFrontStyled = styled(CardBase)`
   background: #ffffff;
 `;
 
-const Text = styled(Typography.Paragraph)`
-  font-size: 11pt;
-`;
+const Text = styled(Typography.Paragraph)``;
 
 interface CardFrontProps {
   card?: CardType;

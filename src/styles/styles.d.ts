@@ -4,18 +4,17 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
-      main: string;
-      gradient: string;
+      primary: string;
+      secondary: string;
+      possibleDeckColors: string[];
       nav: string;
       navStrong: string;
-      text: string;
     };
 
     card: {
       height: string;
       width: string;
       margin: string;
-      borderRadius: string;
     };
   }
 }

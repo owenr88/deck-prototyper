@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 
-import 'antd/dist/antd.css';
+import './styles/app.less';
 
 import theme from './styles/theme';
 import { DataContextProvider } from './data/DataContext';

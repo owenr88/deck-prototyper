@@ -14,6 +14,7 @@ type CardBackStylesProps = {
 const CardBackStyled = styled(CardBase)<CardBackStylesProps>`
   background: ${(props) => props.deck?.color || '#FFFFFF'};
   cursor: pointer;
+  border: 2px solid white;
 `;
 
 interface CardBackProps {

@@ -18,7 +18,9 @@ const CardEmpty: React.FC<CardEmptyProps> = ({ title, onReshuffle }) => {
     <CardEmptyStyled title={title || 'No cards'}>
       {!!onReshuffle && (
         <>
-          <Button onClick={() => onReshuffle()}>Reshuffle?</Button>
+          <Button type="primary" onClick={() => onReshuffle()}>
+            Reshuffle?
+          </Button>
         </>
       )}
     </CardEmptyStyled>
