@@ -22,12 +22,11 @@ const Top = styled.div<TopProps>`
   bottom: 30px;
   left: auto;
   right: auto;
-  z-index: 1001;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   transition: background 1s;
-  background: ${({ theme, open }) =>
-    open ? theme.colors.navStrong : theme.colors.nav};
+  background: ${({ theme, open }) => theme.colors.nav};
   padding: 0 20px;
   border-radius: 20px;
 `;

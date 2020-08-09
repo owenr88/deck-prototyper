@@ -6,7 +6,6 @@ import { getCards, saveCards } from '../queries/cards';
 import { getDecks, saveDecks } from '../queries/decks';
 import { makeDecks } from '../factories/decks';
 import { makeCards } from '../factories/cards';
-import useImport from '../../hooks/useImport';
 import {
   getHasImportedOwnCards,
   saveHasImportedOwnCards,
@@ -25,6 +24,7 @@ interface CardContextProps {
   generateRandomData: () => void;
   refetchFromLocalStorage: () => void;
   changeHasImported: (value: boolean) => void;
+  updateDeckField: (number: number, field: string, value: any) => void;
 }
 
 const Context = React.createContext<CardContextProps>({
@@ -36,6 +36,7 @@ const Context = React.createContext<CardContextProps>({
   generateRandomData: () => {},
   refetchFromLocalStorage: () => {},
   changeHasImported: () => {},
+  updateDeckField: () => {},
 });
 
 const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
@@ -83,6 +84,17 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     setFetching(false);
   };
 
+  const updateDeckField = (number: number, field: string, value: any) => {
+    const index = decks.findIndex((d) => d.number === number);
+    if (index === -1) throw new Error("Deck doesn't exist");
+    decks[index] = {
+      ...decks[index],
+      [field]: value,
+    };
+    saveDecks(decks);
+    refetchFromLocalStorage();
+  };
+
   return (
     <Context.Provider
       value={{
@@ -94,6 +106,7 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
         generateRandomData,
         refetchFromLocalStorage,
         changeHasImported,
+        updateDeckField,
       }}
     >
       {children}

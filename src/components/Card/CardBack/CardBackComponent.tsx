@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Typography } from 'antd';
 
 import { DeckType } from '../../../types';
 import { getCorrectTextColor } from '../../../utils/color';
@@ -7,14 +8,22 @@ import { getCorrectTextColor } from '../../../utils/color';
 import CardBase from '../CardBase';
 import CardEmpty from '../CardEmpty';
 
-type CardBackStylesProps = {
+interface CardBackStylesProps {
   deck?: DeckType;
-};
+}
 
 const CardBackStyled = styled(CardBase)<CardBackStylesProps>`
   background: ${(props) => props.deck?.color || '#FFFFFF'};
   cursor: pointer;
   border: 2px solid white;
+`;
+
+interface TextProps {
+  textColor: string;
+}
+
+const Text = styled(Typography.Paragraph)<TextProps>`
+  color: ${(props) => props.textColor};
 `;
 
 interface CardBackProps {
@@ -30,13 +39,16 @@ const CardBack: React.FC<CardBackProps> = ({
 }) => {
   if (!numberOfCards)
     return <CardEmpty title="Deck Empty" onReshuffle={onClick} />;
+  const color = getCorrectTextColor(deck?.color || '#FFFFFF');
   return (
     <CardBackStyled
       deck={deck}
       title={deck?.title ?? ''}
       onClick={() => onClick()}
-      textColor={getCorrectTextColor(deck?.color || '#FFFFFF')}
-    />
+      textColor={color}
+    >
+      {!!deck?.description && <Text textColor={color}>{deck.description}</Text>}
+    </CardBackStyled>
   );
 };
 

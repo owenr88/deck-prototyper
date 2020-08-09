@@ -7,6 +7,7 @@ declare module 'styled-components' {
       primary: string;
       secondary: string;
       possibleDeckColors: string[];
+      gradientColors: string[];
       nav: string;
       navStrong: string;
     };

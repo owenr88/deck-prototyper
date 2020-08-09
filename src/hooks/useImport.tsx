@@ -92,7 +92,7 @@ const useImport = (): UseImportOutput => {
       title: card.title,
       body1: card.body1,
       body2: card.body2,
-      decks: card.decks.split(','),
+      decks: card.decks.split(',').filter(Boolean),
     }));
   };
 
@@ -123,12 +123,20 @@ const useImport = (): UseImportOutput => {
       },
       []
     );
-    const deckData: DeckType[] = deckNames.map((title, i) => ({
-      number: i + 1,
-      title,
-      description: '',
-      color: faker.random.arrayElement(possibleDeckColors),
-    }));
+    const deckData: DeckType[] = [];
+    const usedColors: string[] = [];
+    deckNames.forEach((title, i) => {
+      const color = faker.random.arrayElement(
+        without(possibleDeckColors, ...usedColors)
+      );
+      usedColors.push(color);
+      deckData.push({
+        number: i + 1,
+        title,
+        description: '',
+        color,
+      });
+    });
     return deckData;
   };
 
@@ -156,16 +164,13 @@ const useImport = (): UseImportOutput => {
   };
 
   const importFile = async (file: File): Promise<void> => {
-    console.log(file);
     setImporting(true);
     try {
       const results = await parseCSV(file);
       const validatedData = validateFields(results);
-      console.log(validatedData);
       const cards = formatCards(validatedData.data);
       checkUniqueIds(cards);
       const decks = createDecksFromImportedCards(cards);
-      console.log('decks', decks);
       saveDecksAndCards(decks, cards);
       refetchFromLocalStorage();
       changeHasImported(true);

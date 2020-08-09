@@ -1,37 +1,146 @@
-import React, { useContext } from 'react';
-import { Drawer, List, Avatar } from 'antd';
+import React, { useContext, useState, useEffect } from 'react';
+import { Drawer, List, Avatar, Typography } from 'antd';
+import { EditOutlined, CiCircleFilled } from '@ant-design/icons';
+import { TwitterPicker } from 'react-color';
 
 import { ConfigPages, DeckType } from '../../../types';
 import DrawerContext from '../../../data/DrawerContext';
 import DataContext from '../../../data/DataContext';
+import styled from 'styled-components';
+import { possibleDeckColors } from '../../../styles/theme';
 
 interface DrawerDecksProps {}
 
+interface ColorDotProps {
+  clicked: boolean;
+  dotColor: string;
+}
+
+const ColorPickerWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const ColorDotStyled = styled.div<ColorDotProps>`
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  transition: 0.2s background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  opacity: ${(props) => (props.clicked ? 1 : 0)};
+  background-color: ${(props) => props.dotColor};
+`;
+
+const BlockPickerWrapper = styled.div`
+  z-index: 2;
+  position: absolute;
+  top: 30px;
+  right: -12px;
+`;
+
+const ListItemStyled = styled(List.Item)`
+  &:hover ${ColorDotStyled} {
+    opacity: 1;
+  }
+`;
+
+interface DeckDrawerListItemProps {
+  deck: DeckType;
+  numberColorPicker: number | null;
+  toggleNumberColorPicker: (number: number) => void;
+}
+
+const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
+  deck,
+  numberColorPicker,
+  toggleNumberColorPicker,
+}) => {
+  const [clicked, setClicked] = useState<boolean>(false);
+  const { cards, updateDeckField } = useContext(DataContext);
+  const totalCards = cards.filter((card) => card.decks?.includes(deck.number));
+
+  useEffect(() => {
+    if (numberColorPicker !== deck.number) setClicked(false);
+  }, [deck.number, numberColorPicker]);
+
+  return (
+    <ListItemStyled>
+      <List.Item.Meta
+        title={
+          <Typography.Title
+            level={4}
+            editable={{
+              onChange: (value) => updateDeckField(deck.number, 'title', value),
+            }}
+          >
+            {deck.title}
+          </Typography.Title>
+        }
+        description={
+          <Typography.Text
+            editable={{
+              onChange: (value) =>
+                updateDeckField(deck.number, 'description', value),
+            }}
+          >
+            {deck.description || 'No description'}
+          </Typography.Text>
+        }
+        avatar={
+          <Avatar style={{ backgroundColor: deck.color }}>
+            {totalCards.length}
+          </Avatar>
+        }
+      />
+      <ColorPickerWrapper>
+        <ColorDotStyled
+          dotColor={deck.color ?? 'white'}
+          clicked={clicked}
+          onClick={() => {
+            setClicked(true);
+            toggleNumberColorPicker(deck.number);
+          }}
+        >
+          {/* <EditOutlined  /> */}
+        </ColorDotStyled>
+        {numberColorPicker === deck.number && (
+          <BlockPickerWrapper>
+            <TwitterPicker
+              color={deck.color ?? 'white'}
+              colors={possibleDeckColors}
+              triangle="top-right"
+              width={'245px'}
+              onChange={(color) => {
+                setClicked(false);
+                toggleNumberColorPicker(deck.number);
+                updateDeckField(deck.number, 'color', color.hex);
+              }}
+            />
+          </BlockPickerWrapper>
+        )}
+      </ColorPickerWrapper>
+    </ListItemStyled>
+  );
+};
+
 const DrawerDecks: React.FC<DrawerDecksProps> = () => {
   const { pages, hasPage, togglePage } = useContext(DrawerContext);
-  const { cards, decks } = useContext(DataContext);
+  const { decks } = useContext(DataContext);
+  const [numberColorPicker, setNumberColorPicker] = useState<number | null>(
+    null
+  );
 
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'number',
-    },
-    {
-      title: 'title',
-      dataIndex: 'title',
-    },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-    },
-    {
-      title: 'Cards',
-      render: (deck: DeckType) =>
-        cards
-          .filter((card) => card.decks?.includes(deck.number))
-          .reduce((t, c) => t + c.number, 0),
-    },
-  ];
+  const toggleNumberColorPicker = (no: number) => {
+    console.log('toggling', numberColorPicker, no);
+    setNumberColorPicker(numberColorPicker === no ? null : no);
+  };
 
   return (
     <Drawer
@@ -46,25 +155,13 @@ const DrawerDecks: React.FC<DrawerDecksProps> = () => {
     >
       <List
         dataSource={decks}
-        renderItem={(deck: DeckType) => {
-          const totalCards = cards.filter((card) =>
-            card.decks?.includes(deck.number)
-          );
-          return (
-            <List.Item>
-              <List.Item.Meta
-                title={deck.title}
-                description={deck.description || 'No description'}
-                avatar={
-                  <Avatar style={{ backgroundColor: deck.color }}>
-                    {totalCards.length}
-                  </Avatar>
-                }
-              />
-              {/* <div>{totalCards.length || 0} cards</div> */}
-            </List.Item>
-          );
-        }}
+        renderItem={(deck: DeckType) => (
+          <DeckDrawerListItem
+            deck={deck}
+            numberColorPicker={numberColorPicker}
+            toggleNumberColorPicker={toggleNumberColorPicker}
+          />
+        )}
       />
     </Drawer>
   );
