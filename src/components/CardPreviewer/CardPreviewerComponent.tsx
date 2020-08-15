@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import DataContext from '../../data/DataContext';
 import Deck from '../Deck';
+import { DeckType } from '../../types';
 
 interface CardPreviewerProps {}
 
@@ -10,7 +11,7 @@ const CardPreviewer: React.FC<CardPreviewerProps> = () => {
 
   return (
     <>
-      {decks.map((deck) => {
+      {decks.map((deck: DeckType) => {
         return <Deck deck={deck} key={'deck' + deck.number} />;
       })}
     </>

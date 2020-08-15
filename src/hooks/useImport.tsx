@@ -5,7 +5,7 @@ import faker from 'faker';
 
 import { saveCards } from '../data/queries/cards';
 import { saveDecks } from '../data/queries/decks';
-import { DeckType, CardType } from '../types';
+import { DeckType, CardType, CardDecks } from '../types';
 import DataContext from '../data/DataContext';
 import { possibleDeckColors } from '../styles/theme';
 
@@ -36,7 +36,7 @@ interface UseImportOutput {
  * Hook to import data into the app
  */
 const useImport = (): UseImportOutput => {
-  const { refetchFromLocalStorage, changeHasImported } = useContext(
+  const { refetchFromLocalStorage, changeHasImported, findDeck } = useContext(
     DataContext
   );
   const [importing, setImporting] = useState(false);
@@ -117,7 +117,8 @@ const useImport = (): UseImportOutput => {
     const deckNames: string[] = cards.reduce(
       (all: string[], card: CardTypeWithStringDecks) => {
         card.decks.forEach((deck: string) => {
-          if (deck && !all.includes(deck)) all.push(deck);
+          const deckName = deck.split('|')[0];
+          if (!all.includes(deckName)) all.push(deckName);
         });
         return all;
       },
@@ -150,12 +151,18 @@ const useImport = (): UseImportOutput => {
     cards: CardTypeWithStringDecks[]
   ) => {
     const cardData: CardType[] = cards.map((card: CardTypeWithStringDecks) => {
-      const deckNumbers = card.decks
-        .map((deckName) => decks.find((d) => d?.title === deckName))
-        .map((d) => d?.number);
+      const decksRelationship: CardDecks = {};
+      card.decks.forEach((deckNameAndNumber: string) => {
+        if (!deckNameAndNumber) return;
+        let [deckName, total = 1] = deckNameAndNumber.split('|');
+        const deckData = decks.find((d) => d.title === deckName);
+        if (!deckData) return;
+        // @ts-ignore
+        decksRelationship[deckData.number] = parseInt(total);
+      });
       return {
         ...card,
-        decks: deckNumbers,
+        decks: decksRelationship,
       } as CardType;
     });
 

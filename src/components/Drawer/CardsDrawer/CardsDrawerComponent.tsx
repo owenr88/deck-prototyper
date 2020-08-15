@@ -1,15 +1,30 @@
 import React, { useContext } from 'react';
 import { Drawer, Table, Tag } from 'antd';
 
-import { ConfigPages, CardType } from '../../../types';
+import { ConfigPages, CardType, CardDecks, DeckType } from '../../../types';
 import DataContext from '../../../data/DataContext';
 import DrawerContext from '../../../data/DrawerContext';
 
 interface DrawerDecksProps {}
 
 const DrawerData: React.FC<DrawerDecksProps> = () => {
-  const { cards, decks } = useContext(DataContext);
+  const { cards, findDeck } = useContext(DataContext);
   const { pages, hasPage, togglePage } = useContext(DrawerContext);
+
+  const getCardDeckData = (deckData: CardDecks): DeckType[] => {
+    // @ts-ignore
+    return Object.keys(deckData)
+      .map((deckId) => {
+        const total = deckData[parseInt(deckId)];
+        const deck = findDeck(parseInt(deckId));
+        if (!deck) return null;
+        return {
+          ...deck,
+          title: `${deck.title} (${total})`,
+        } as DeckType;
+      })
+      .filter(Boolean);
+  };
 
   const columns = [
     {
@@ -31,14 +46,12 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
     {
       title: 'Decks',
       dataIndex: 'decks',
-      render: (deckNumbers: number[], card: CardType) => {
-        const cardDecks = deckNumbers.map((number) =>
-          decks.find((d) => d.number === number)
-        );
+      render: (deckNumbers: CardDecks, card: CardType) => {
+        const cardDecks = getCardDeckData(deckNumbers);
         return (
           <>
             {cardDecks.map((deck) => {
-              if (!deck?.title) return null;
+              if (!deck.title) return null;
               return (
                 <Tag
                   color={deck?.color}

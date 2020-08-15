@@ -2,11 +2,32 @@ import { useContext, useState } from 'react';
 import Papa from 'papaparse';
 
 import DataContext from '../data/DataContext';
+import { CardDecks } from '../types';
 
 interface UseExportOutput {
   exportData: () => Promise<void>;
   exporting: boolean;
 }
+
+/**
+ * Take the deck Ids and transform them into a string
+ * @param deckData
+ * @param getCardDeckNames
+ */
+const transformCardDecksToString = (
+  deckData: CardDecks,
+  getCardDeckNames: (decks: number[]) => string[]
+) => {
+  return Object.keys(deckData)
+    .map((deckId) => {
+      const total = deckData[parseInt(deckId)];
+      const [name] = getCardDeckNames([parseInt(deckId)]);
+      if (!name) return '';
+      return `${name}|${total}`;
+    })
+    .filter(Boolean)
+    .join(',');
+};
 
 /**
  * Hook to export data from the app
@@ -23,9 +44,7 @@ const useExport = (): UseExportOutput => {
     const cardsContent = Papa.unparse(
       cards.map((card) => ({
         ...card,
-        decks: getCardDeckNames(card?.decks ?? [])
-          .filter(Boolean)
-          .join(','),
+        decks: transformCardDecksToString(card.decks, getCardDeckNames),
       }))
     );
 

@@ -3,7 +3,7 @@ import { Drawer, List, Avatar, Typography } from 'antd';
 import { EditOutlined, CiCircleFilled } from '@ant-design/icons';
 import { TwitterPicker } from 'react-color';
 
-import { ConfigPages, DeckType } from '../../../types';
+import { ConfigPages, DeckType, CardType } from '../../../types';
 import DrawerContext from '../../../data/DrawerContext';
 import DataContext from '../../../data/DataContext';
 import styled from 'styled-components';
@@ -64,7 +64,9 @@ const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
 }) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const { cards, updateDeckField } = useContext(DataContext);
-  const totalCards = cards.filter((card) => card.decks?.includes(deck.number));
+  const totalCards = cards.filter(
+    (card: CardType) => deck.number in card.decks
+  );
 
   useEffect(() => {
     if (numberColorPicker !== deck.number) setClicked(false);

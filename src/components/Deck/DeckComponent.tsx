@@ -13,18 +13,16 @@ interface DeckComponentsProps {
 }
 
 const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
-  const { cards } = useContext(DataContext);
+  const { cards, getCardsByDeck } = useContext(DataContext);
 
   const [cardsInDeck, setCardsInDeck] = useState<CardType[]>([]);
   const [cardsDiscarded, setCardsDiscarded] = useState<CardType[]>([]);
 
   const refillDeck = useCallback(() => {
-    const cardsByDeck = cards.filter((card) =>
-      card.decks.includes(deck.number)
-    );
+    const cardsByDeck = getCardsByDeck(deck);
     setCardsInDeck(cardsByDeck);
     setCardsDiscarded([]);
-  }, [cards, deck.number]);
+  }, [deck, getCardsByDeck]);
 
   // Refresh the data if it changes
   useEffect(() => {

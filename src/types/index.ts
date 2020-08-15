@@ -4,12 +4,16 @@ export enum ConfigPages {
   SETTINGS,
 }
 
+export interface CardDecks {
+  [key: number]: number;
+}
+
 export interface CardType {
   number: number;
   title?: string;
   body1?: string;
   body2?: string;
-  decks: number[];
+  decks: CardDecks;
 }
 
 export interface DeckType {

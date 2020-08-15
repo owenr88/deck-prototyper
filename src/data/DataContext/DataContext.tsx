@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { times, flatten } from 'lodash';
 
 import { CardType, DeckType } from '../../types';
 
@@ -21,6 +22,8 @@ interface CardContextProps {
   fetching: boolean;
   hasImported: boolean;
   getCardDeckNames: (decksToSearch?: number[]) => string[];
+  getCardsByDeck: (deck: DeckType) => CardType[];
+  findDeck: (deckId: number) => DeckType | undefined;
   generateRandomData: () => void;
   refetchFromLocalStorage: () => void;
   changeHasImported: (value: boolean) => void;
@@ -33,6 +36,8 @@ const Context = React.createContext<CardContextProps>({
   fetching: true,
   hasImported: false,
   getCardDeckNames: () => [],
+  getCardsByDeck: () => [],
+  findDeck: () => undefined,
   generateRandomData: () => {},
   refetchFromLocalStorage: () => {},
   changeHasImported: () => {},
@@ -61,8 +66,20 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
   const getCardDeckNames = (decksToSearch?: number[]) =>
     decksToSearch
-      ?.map((number) => decks.find((d) => d.number === number)?.title ?? '')
+      ?.map((number) => findDeck(number)?.title ?? '')
       .filter(Boolean) ?? [];
+
+  const findDeck = (deckId?: number): DeckType | undefined =>
+    decks.find((d) => d.number === deckId);
+
+  const getCardsByDeck = (deck: DeckType) => {
+    const fullDeck = cards
+      .filter((card) => deck.number in card.decks)
+      .map((card) => {
+        return times(card.decks[deck.number], () => card);
+      });
+    return flatten(fullDeck);
+  };
 
   const generateRandomData = () => {
     setFetching(true);
@@ -70,6 +87,8 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     saveDecks(decks);
     setDecks(decks);
     const cards = makeCards(10, decks);
+    console.log(decks);
+    console.log(cards);
     saveCards(cards);
     setCards(cards);
     setFetching(false);
@@ -103,6 +122,8 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
         fetching,
         hasImported,
         getCardDeckNames,
+        getCardsByDeck,
+        findDeck,
         generateRandomData,
         refetchFromLocalStorage,
         changeHasImported,
