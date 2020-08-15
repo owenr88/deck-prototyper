@@ -29,7 +29,7 @@ const ColorDotStyled = styled.div<ColorDotProps>`
   border-radius: 50%;
   cursor: pointer;
   background-color: transparent;
-  transition: 0.2s background-color;
+  transition: 0.2s opacity;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,10 +63,8 @@ const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
   toggleNumberColorPicker,
 }) => {
   const [clicked, setClicked] = useState<boolean>(false);
-  const { cards, updateDeckField } = useContext(DataContext);
-  const totalCards = cards.filter(
-    (card: CardType) => deck.number in card.decks
-  );
+  const { cards, updateDeckField, getCardsByDeck } = useContext(DataContext);
+  const totalCards = getCardsByDeck(deck);
 
   useEffect(() => {
     if (numberColorPicker !== deck.number) setClicked(false);

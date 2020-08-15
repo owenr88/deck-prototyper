@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import {
   OrderedListOutlined,
-  IdcardOutlined,
   SettingOutlined,
   QuestionCircleOutlined,
+  BookOutlined,
 } from '@ant-design/icons';
 import { Tooltip, Popconfirm } from 'antd';
 
 import { ConfigPages } from '../../types';
 import DrawerContext from '../../data/DrawerContext';
 import DataContext from '../../data/DataContext';
-import useImport from '../../hooks/useImport';
 
 type TopProps = {
   open: boolean;
@@ -45,7 +44,7 @@ const NavComponent: React.FC<NavProps> = () => {
   return (
     <Top open={hasPage(ConfigPages.DATA)}>
       <IconItem>
-        <IdcardOutlined onClick={() => togglePage(ConfigPages.DECKS)} />
+        <BookOutlined onClick={() => togglePage(ConfigPages.DECKS)} />
       </IconItem>
       <IconItem>
         <OrderedListOutlined onClick={() => togglePage(ConfigPages.DATA)} />
