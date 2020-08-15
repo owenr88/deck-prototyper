@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Drawer, List, Avatar, Typography } from 'antd';
-import { EditOutlined, CiCircleFilled } from '@ant-design/icons';
+import { Drawer, List, Avatar, Typography, Input, message } from 'antd';
+import { EnterOutlined } from '@ant-design/icons';
 import { TwitterPicker } from 'react-color';
+import styled from 'styled-components';
+import faker from 'faker';
 
 import { ConfigPages, DeckType, CardType } from '../../../types';
 import DrawerContext from '../../../data/DrawerContext';
 import DataContext from '../../../data/DataContext';
-import styled from 'styled-components';
 import { possibleDeckColors } from '../../../styles/theme';
 
 interface DrawerDecksProps {}
@@ -63,7 +64,7 @@ const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
   toggleNumberColorPicker,
 }) => {
   const [clicked, setClicked] = useState<boolean>(false);
-  const { cards, updateDeckField, getCardsByDeck } = useContext(DataContext);
+  const { updateDeckField, getCardsByDeck } = useContext(DataContext);
   const totalCards = getCardsByDeck(deck);
 
   useEffect(() => {
@@ -132,14 +133,31 @@ const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
 
 const DrawerDecks: React.FC<DrawerDecksProps> = () => {
   const { pages, hasPage, togglePage } = useContext(DrawerContext);
-  const { decks } = useContext(DataContext);
+  const { decks, createDeck } = useContext(DataContext);
   const [numberColorPicker, setNumberColorPicker] = useState<number | null>(
     null
   );
+  const [newDeck, setNewDeck] = useState<string>('');
 
   const toggleNumberColorPicker = (no: number) => {
     console.log('toggling', numberColorPicker, no);
     setNumberColorPicker(numberColorPicker === no ? null : no);
+  };
+
+  const addNewDeck = (e: any) => {
+    e.preventDefault();
+    const title = newDeck;
+    if (!title) {
+      message.error('Please input a deck name first');
+      return;
+    }
+    createDeck({
+      number: decks.length + 1,
+      title,
+      color: faker.random.arrayElement(possibleDeckColors),
+      description: '',
+    });
+    setNewDeck('');
   };
 
   return (
@@ -162,6 +180,15 @@ const DrawerDecks: React.FC<DrawerDecksProps> = () => {
             toggleNumberColorPicker={toggleNumberColorPicker}
           />
         )}
+        footer={
+          <Input
+            value={newDeck}
+            onChange={(e) => setNewDeck(e.target.value)}
+            placeholder="Add new deck"
+            addonAfter={<EnterOutlined />}
+            onPressEnter={addNewDeck}
+          />
+        }
       />
     </Drawer>
   );

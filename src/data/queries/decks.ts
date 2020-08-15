@@ -12,6 +12,5 @@ export const getDecks = (): DeckType[] => {
   return JSON.parse(data) as DeckType[];
 };
 
-export const addDeck = (deck: DeckType): void => {};
 export const removeDeck = (deck: DeckType): void => {};
 export const updateDeck = (deck: DeckType): void => {};

@@ -29,6 +29,8 @@ interface CardContextProps {
   changeHasImported: (value: boolean) => void;
   updateDeckField: (number: number, field: string, value: any) => void;
   updateCardField: (number: number, field: string, value: any) => void;
+  createDeck: (deck: DeckType) => void;
+  createCard: (card: CardType) => void;
 }
 
 const Context = React.createContext<CardContextProps>({
@@ -44,6 +46,8 @@ const Context = React.createContext<CardContextProps>({
   changeHasImported: () => {},
   updateDeckField: () => {},
   updateCardField: () => {},
+  createDeck: () => {},
+  createCard: () => {},
 });
 
 const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
@@ -127,6 +131,18 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     refetchFromLocalStorage();
   };
 
+  const createCard = (card: CardType) => {
+    cards.push(card);
+    saveCards(cards);
+    refetchFromLocalStorage();
+  };
+
+  const createDeck = (deck: DeckType) => {
+    decks.push(deck);
+    saveDecks(decks);
+    refetchFromLocalStorage();
+  };
+
   return (
     <Context.Provider
       value={{
@@ -142,6 +158,8 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
         changeHasImported,
         updateDeckField,
         updateCardField,
+        createDeck,
+        createCard,
       }}
     >
       {children}
