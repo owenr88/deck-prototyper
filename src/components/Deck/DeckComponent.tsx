@@ -12,6 +12,15 @@ interface DeckComponentsProps {
   deck: DeckType;
 }
 
+const TextStyled = styled(Typography.Text)`
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+`;
+
 const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
   const { cards, getCardsByDeck } = useContext(DataContext);
 
@@ -50,21 +59,21 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
         numberOfCards={cardsInDeck.length}
       />
       {!cardsDiscarded.length ? (
-        <Typography.Text>{cardsInDeck.length} in deck</Typography.Text>
+        <TextStyled>{cardsInDeck.length} in deck</TextStyled>
       ) : (
-        <Typography.Text>{cardsInDeck.length} remaining</Typography.Text>
+        <TextStyled>{cardsInDeck.length} remaining</TextStyled>
       )}
       <CardFront card={last(cardsDiscarded)} />
       {!cardsDiscarded.length ? (
-        <Typography.Text>0 discarded</Typography.Text>
+        <TextStyled>0 discarded</TextStyled>
       ) : (
-        <Typography.Text>
+        <TextStyled>
           {cardsDiscarded.length} discarded -{' '}
           <a onClick={refillDeck} href="#">
             reshuffle
           </a>
           ?
-        </Typography.Text>
+        </TextStyled>
       )}
     </Wrapper>
   );

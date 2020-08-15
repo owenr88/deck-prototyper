@@ -8,8 +8,14 @@ import DrawerContext from '../../data/DrawerContext';
 
 import useImport from '../../hooks/useImport';
 import useExport from '../../hooks/useExport';
+import styled from 'styled-components';
 
 interface SettingsProps {}
+
+const FooterText = styled(Typography.Paragraph)`
+  text-align: center;
+  margin-bottom: 0;
+`;
 
 const Settings: React.FC<SettingsProps> = () => {
   const { hasPage, togglePage } = useContext(DrawerContext);
@@ -43,8 +49,15 @@ const Settings: React.FC<SettingsProps> = () => {
       title="Import/Export data"
       visible={hasPage(ConfigPages.SETTINGS)}
       onOk={() => togglePage(ConfigPages.SETTINGS)}
-      okText="Done"
       onCancel={() => togglePage(ConfigPages.SETTINGS)}
+      footer={
+        <FooterText>
+          Made with ♥️ by{' '}
+          <a target="_blank" href="https://github.com/owenr88">
+            Owen
+          </a>
+        </FooterText>
+      }
     >
       <Upload.Dragger
         accept=".csv"

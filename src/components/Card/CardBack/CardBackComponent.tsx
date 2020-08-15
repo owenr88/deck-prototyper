@@ -24,6 +24,12 @@ interface TextProps {
 
 const Text = styled(Typography.Paragraph)<TextProps>`
   color: ${(props) => props.textColor};
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 interface CardBackProps {
