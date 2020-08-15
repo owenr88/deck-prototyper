@@ -39,7 +39,7 @@ const useExport = (): UseExportOutput => {
   const exportData = async () => {
     setExporting(true);
 
-    const decksContent = Papa.unparse(decks);
+    // const decksContent = Papa.unparse(decks);
 
     const cardsContent = Papa.unparse(
       cards.map((card) => ({
@@ -50,11 +50,8 @@ const useExport = (): UseExportOutput => {
 
     const prefix = 'data:text/csv;charset=utf-8,';
 
-    console.log(prefix + decksContent);
-    console.log(prefix + cardsContent);
-
-    const encodedDeckUri = encodeURI(prefix + decksContent);
-    window.open(encodedDeckUri);
+    // const encodedDeckUri = encodeURI(prefix + decksContent);
+    // window.open(encodedDeckUri);
     const encodedCardsUri = encodeURI(prefix + cardsContent);
     window.open(encodedCardsUri);
     setExporting(false);
