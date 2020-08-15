@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { without, last, sample } from 'lodash';
+import { without, last, random } from 'lodash';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
@@ -34,10 +34,12 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
       refillDeck();
       return;
     }
-    const card = sample(cardsInDeck);
-    if (!card) return;
-    setCardsInDeck(without(cardsInDeck, card));
-    setCardsDiscarded([...cardsDiscarded, card]);
+    const cards = [...cardsInDeck];
+    const index = random(0, cards.length);
+    const removedCards = cards.splice(index, 1);
+    if (!removedCards.length) return;
+    setCardsInDeck(cards);
+    setCardsDiscarded([...cardsDiscarded, removedCards[0]]);
   };
 
   return (
@@ -47,9 +49,23 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
         onClick={selectNextCardOrReshuffle}
         numberOfCards={cardsInDeck.length}
       />
-      <Typography.Text>{cardsInDeck.length} remaining</Typography.Text>
+      {!cardsDiscarded.length ? (
+        <Typography.Text>{cardsInDeck.length} in deck</Typography.Text>
+      ) : (
+        <Typography.Text>{cardsInDeck.length} remaining</Typography.Text>
+      )}
       <CardFront card={last(cardsDiscarded)} />
-      <Typography.Text>{cardsDiscarded.length} discarded</Typography.Text>
+      {!cardsDiscarded.length ? (
+        <Typography.Text>0 discarded</Typography.Text>
+      ) : (
+        <Typography.Text>
+          {cardsDiscarded.length} discarded -{' '}
+          <a onClick={refillDeck} href="#">
+            reshuffle
+          </a>
+          ?
+        </Typography.Text>
+      )}
     </Wrapper>
   );
 };

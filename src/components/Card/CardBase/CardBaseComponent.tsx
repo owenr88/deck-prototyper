@@ -28,7 +28,7 @@ const Title = styled(Typography.Title)<TitleStyledprops>`
 const CardBasic: React.FC<any> = ({ children, title, textColor, ...props }) => {
   return (
     <CardStyledBasic bordered={false} {...props}>
-      <Title level={2} color={textColor}>
+      <Title level={3} color={textColor}>
         {title}
       </Title>
       {children}

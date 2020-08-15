@@ -17,7 +17,7 @@ interface CardFrontProps {
 }
 
 const CardFront: React.FC<CardFrontProps> = ({ card }) => {
-  if (!card) return <CardEmpty />;
+  if (!card) return <CardEmpty title="None discarded" />;
   return (
     <CardFrontStyled title={card?.title ?? ''}>
       {card?.body1 && <Text>{card?.body1}</Text>}

@@ -1,16 +1,17 @@
 import { DefaultTheme } from 'styled-components';
 
-const primary = '#07D514';
-const secondary = '#01C4D6';
+import colors from './colors';
+
+const primary = colors.primary;
+const secondary = colors.secondary;
 
 export const possibleDeckColors = [
   primary,
   secondary,
-  '#098BE1',
-  // '#0485F7',
-  '#FFC200',
-  '#FF4F00',
-  '#FF9500',
+  colors.lightBlue,
+  colors.lightOrange,
+  colors.red,
+  colors.orange,
 ];
 
 const theme: DefaultTheme = {
@@ -18,7 +19,7 @@ const theme: DefaultTheme = {
     primary,
     secondary,
     possibleDeckColors,
-    gradientColors: [primary, '#0485F7', '#098BE1', secondary],
+    gradientColors: [primary, colors.blue, colors.secondary, secondary],
     nav: 'rgba(255,255,255,0.1)',
     navStrong: 'rgba(255,255,255,0.5)',
   },
