@@ -28,6 +28,7 @@ interface CardContextProps {
   refetchFromLocalStorage: () => void;
   changeHasImported: (value: boolean) => void;
   updateDeckField: (number: number, field: string, value: any) => void;
+  updateCardField: (number: number, field: string, value: any) => void;
 }
 
 const Context = React.createContext<CardContextProps>({
@@ -42,6 +43,7 @@ const Context = React.createContext<CardContextProps>({
   refetchFromLocalStorage: () => {},
   changeHasImported: () => {},
   updateDeckField: () => {},
+  updateCardField: () => {},
 });
 
 const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
@@ -114,6 +116,17 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     refetchFromLocalStorage();
   };
 
+  const updateCardField = (number: number, field: string, value: any) => {
+    const index = cards.findIndex((d) => d.number === number);
+    if (index === -1) throw new Error("Card doesn't exist");
+    cards[index] = {
+      ...cards[index],
+      [field]: value,
+    };
+    saveCards(cards);
+    refetchFromLocalStorage();
+  };
+
   return (
     <Context.Provider
       value={{
@@ -128,6 +141,7 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
         refetchFromLocalStorage,
         changeHasImported,
         updateDeckField,
+        updateCardField,
       }}
     >
       {children}

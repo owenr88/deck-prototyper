@@ -148,7 +148,7 @@ const DrawerDecks: React.FC<DrawerDecksProps> = () => {
     <Drawer
       title="Decks"
       placement="left"
-      width={'30%'}
+      width={'40%'}
       closable={true}
       visible={hasPage(ConfigPages.DECKS)}
       onClose={() => togglePage(ConfigPages.DECKS)}
