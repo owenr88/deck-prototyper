@@ -22,6 +22,9 @@ const TextStyled = styled(Typography.Text)`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  position: absolute;
+  top: -5px;
+  font-size: 11px;
 `;
 
 const Wrapper = styled.div`
@@ -79,27 +82,23 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
 
   return (
     <Wrapper>
-      <CardBack
-        deck={deck}
-        onClick={selectNextCardOrReshuffle}
-        numberOfCards={cardsInDeck.length}
-      />
-      {/* {!cardsDiscarded.length ? (
+      {!cardsDiscarded.length ? (
         <TextStyled>{cardsInDeck.length} in deck</TextStyled>
       ) : (
-        <TextStyled>{cardsInDeck.length} remaining</TextStyled>
-      )} */}
-      {!cardsDiscarded.length ? (
-        <TextStyled>0 discarded</TextStyled>
-      ) : (
         <TextStyled>
-          {cardsDiscarded.length} discarded -{' '}
+          {cardsInDeck.length}/{cardsInDeck.length + cardsDiscarded.length}
+          {' - '}
           <a onClick={refillDeck} href="#">
             reshuffle
           </a>
           ?
         </TextStyled>
       )}
+      <CardBack
+        deck={deck}
+        onClick={selectNextCardOrReshuffle}
+        numberOfCards={cardsInDeck.length}
+      />
       <CardFront card={last(cardsDiscarded)} marginTop={cardMarginTop} />
     </Wrapper>
   );
