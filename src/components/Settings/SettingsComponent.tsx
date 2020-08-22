@@ -38,8 +38,10 @@ const Settings: React.FC<SettingsProps> = () => {
   const handleImport = async (info: any) => {
     try {
       await importFile(info.file);
+      message.success('File imported');
       info.onSuccess('ok');
     } catch (e) {
+      message.error(e.message);
       info.onError(e);
     }
   };
@@ -64,6 +66,7 @@ const Settings: React.FC<SettingsProps> = () => {
         name="file"
         multiple={false}
         customRequest={handleImport}
+        showUploadList={false}
       >
         <p className="ant-upload-drag-icon">
           <ImportOutlined />
@@ -89,18 +92,18 @@ const Settings: React.FC<SettingsProps> = () => {
       {showMore && (
         <>
           <Typography.Paragraph>
-            * Only the number (ID) and title are required to be filled for each
-            card, but all fields must be present.
+            * Only the number (card ID) and title are required to be filled for
+            each card, but all fields must be present.
           </Typography.Paragraph>
           <Typography.Paragraph>
-            * The number (ID) must be unique for every card/row.
+            * The number (card ID) must be unique for every card/row.
           </Typography.Paragraph>
           <Typography.Paragraph>
             * The decks field is a comma separated list of deck names, which can
             use an optional pipe ("|") to define the total number of this card
             included in a deck. For example a 'decks' field with "Action Deck|4"
             will mean that 4 of that card will be inserted into the "Action
-            Deck".
+            Deck". See the sample CSV above as an example.
           </Typography.Paragraph>
         </>
       )}
