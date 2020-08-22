@@ -62,7 +62,6 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
     } else {
       decks[deck.number] = decks[deck.number] - 1;
     }
-    console.log('removed = new decks', decks);
     updateCardField(card.number, 'decks', decks);
   };
 
@@ -74,7 +73,6 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
     } else {
       decks[deck.number] = decks[deck.number] + 1;
     }
-    console.log('added = new decks', decks);
     updateCardField(card.number, 'decks', decks);
   };
 

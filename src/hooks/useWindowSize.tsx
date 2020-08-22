@@ -10,7 +10,6 @@ export const useWindowHeight = (): number => {
 
   useEffect(() => {
     function handleResize() {
-      console.log('checking', window.innerHeight);
       if (window.innerHeight === height) return;
       setHeight(window.innerHeight);
     }

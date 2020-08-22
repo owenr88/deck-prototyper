@@ -142,7 +142,6 @@ const DrawerDecks: React.FC<DrawerDecksProps> = () => {
   const [newDeck, setNewDeck] = useState<string>('');
 
   const toggleNumberColorPicker = (no: number) => {
-    console.log('toggling', numberColorPicker, no);
     setNumberColorPicker(numberColorPicker === no ? null : no);
   };
 

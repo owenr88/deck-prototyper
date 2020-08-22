@@ -41,7 +41,6 @@ const CardPreviewer: React.FC<CardPreviewerProps> = () => {
     slidesToShow: toShow,
     slidesToScroll: toShow,
     initialSlide: 0,
-    onReinit: console.log,
   };
 
   return (

@@ -93,8 +93,6 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
     saveDecks(decks);
     setDecks(decks);
     const cards = makeCards(10, decks);
-    console.log(decks);
-    console.log(cards);
     saveCards(cards);
     setCards(cards);
     setFetching(false);
