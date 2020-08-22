@@ -56,7 +56,7 @@ const NavComponent: React.FC<NavProps> = () => {
         <Tooltip title="Generate random data" placement="top">
           {hasImported ? (
             <Popconfirm
-              title="This will override any data you imported already. Are you sure?"
+              title="Generating random data will override any data you imported already. Are you sure?"
               onConfirm={() => generateRandomData()}
               onCancel={() => {}}
               okText="Yes"
