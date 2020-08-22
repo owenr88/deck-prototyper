@@ -2,12 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
 
-import { CardType } from '../../../types';
 import CardBase from '../CardBase';
 import CardEmpty from '../CardEmpty';
+import { CardType } from '../../../types';
 
-const CardFrontStyled = styled(CardBase)`
-  background: #ffffff;
+interface CardFrontStyledProps {
+  $marginTop: number;
+}
+
+const CardFrontStyled = styled(CardBase)<CardFrontStyledProps>`
+  background: #f9fbef;
+  z-index: 2;
+  ${(props) =>
+    props.$marginTop < 0 ? `margin-top: ${props.$marginTop}px` : ''};
 `;
 
 const Number = styled(Typography.Text)`
@@ -20,12 +27,13 @@ const Text = styled(Typography.Paragraph)``;
 
 interface CardFrontProps {
   card?: CardType;
+  marginTop?: number;
 }
 
-const CardFront: React.FC<CardFrontProps> = ({ card }) => {
-  if (!card) return <CardEmpty title="None discarded" />;
+const CardFront: React.FC<CardFrontProps> = ({ card, marginTop }) => {
+  if (!card) return <CardEmpty title="None discarded" marginTop={marginTop} />;
   return (
-    <CardFrontStyled title={card?.title ?? ''}>
+    <CardFrontStyled title={card?.title ?? ''} $marginTop={marginTop}>
       <Number>#{card?.number}</Number>
       {card?.body1 && <Text>{card?.body1}</Text>}
       {card?.body2 && <Text>{card?.body2}</Text>}

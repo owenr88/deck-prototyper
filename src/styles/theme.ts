@@ -14,6 +14,9 @@ export const possibleDeckColors = [
   colors.orange,
 ];
 
+export const cardWidth = 200;
+export const cardHeight = cardWidth * 1.4;
+
 const theme: DefaultTheme = {
   colors: {
     primary,
@@ -24,8 +27,8 @@ const theme: DefaultTheme = {
     navStrong: 'rgba(255,255,255,0.5)',
   },
   card: {
-    height: '238px', // * the width by 1.4
-    width: '170px',
+    height: `${cardHeight}px`,
+    width: `${cardWidth}px`,
     margin: '15px',
   },
 };

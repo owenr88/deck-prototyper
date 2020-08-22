@@ -9,7 +9,7 @@ import DrawerContext from '../../../data/DrawerContext';
 import { getCorrectTextColor } from '../../../utils/color';
 
 interface TagStyledProps {
-  textColor: string;
+  $textColor: string;
   theme: DefaultTheme;
 }
 
@@ -17,12 +17,12 @@ const TagStyled = styled(Tag)<TagStyledProps>`
   clear: both;
   float: left;
   margin-bottom: 5px;
-  color: ${(props) => props.textColor};
+  color: ${(props) => props.$textColor};
 
   .ant-tag-close-icon {
     font-size: 12px;
     margin-left: 7px;
-    color: ${(props) => props.textColor};
+    color: ${(props) => props.$textColor};
   }
 `;
 
@@ -142,7 +142,7 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
                   }
                   closeIcon={<PlusCircleOutlined color={'white'} />}
                   color={deck?.color}
-                  textColor={textColor}
+                  $textColor={textColor}
                   key={card.number + 'tag' + deck?.number}
                   closable={true}
                   onClose={(e: any) => addToDeck(e, card, deck)}
@@ -174,7 +174,7 @@ const DrawerData: React.FC<DrawerDecksProps> = () => {
     <Drawer
       title="Cards"
       placement="right"
-      width={'90%'}
+      width={'95%'}
       closable={true}
       visible={hasPage(ConfigPages.DATA)}
       onClose={() => togglePage(ConfigPages.DATA)}

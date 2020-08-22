@@ -2,11 +2,14 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { last, random } from 'lodash';
 import { Typography } from 'antd';
 import styled from 'styled-components';
+import { min, max } from 'lodash';
 
 import DataContext from '../../data/DataContext';
 
 import { DeckType, CardType } from '../../types';
 import { CardFront, CardBack } from '../Card';
+import { useWindowHeight } from '../../hooks/useWindowSize';
+import { cardHeight } from '../../styles/theme';
 
 interface DeckComponentsProps {
   deck: DeckType;
@@ -21,8 +24,16 @@ const TextStyled = styled(Typography.Text)`
   user-select: none;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
   const { cards, getCardsByDeck } = useContext(DataContext);
+  const height = useWindowHeight();
+  const [cardMarginTop, setCardMarginTop] = useState<number>(0);
 
   const [cardsInDeck, setCardsInDeck] = useState<CardType[]>([]);
   const [cardsDiscarded, setCardsDiscarded] = useState<CardType[]>([]);
@@ -51,19 +62,33 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
     setCardsDiscarded([...cardsDiscarded, removedCards[0]]);
   };
 
+  useEffect(() => {
+    const idealHeight = cardHeight * 2; // Cards and margin
+    const containerHeight = height - 100 - 60;
+    if (containerHeight >= idealHeight) return;
+
+    const expectedMarginTop = containerHeight - idealHeight;
+    const withMaximum = min([expectedMarginTop, -50]) ?? cardMarginTop;
+    const withMinimum = max([withMaximum, -120]) ?? cardMarginTop;
+    if (withMinimum === cardMarginTop) return;
+
+    setCardMarginTop(withMinimum);
+  }, [cardMarginTop, height]);
+
+  console.log('cardMarginTop', cardMarginTop);
+
   return (
     <Wrapper>
       <CardBack
-        deck={!!cardsInDeck.length ? deck : undefined}
+        deck={deck}
         onClick={selectNextCardOrReshuffle}
         numberOfCards={cardsInDeck.length}
       />
-      {!cardsDiscarded.length ? (
+      {/* {!cardsDiscarded.length ? (
         <TextStyled>{cardsInDeck.length} in deck</TextStyled>
       ) : (
         <TextStyled>{cardsInDeck.length} remaining</TextStyled>
-      )}
-      <CardFront card={last(cardsDiscarded)} />
+      )} */}
       {!cardsDiscarded.length ? (
         <TextStyled>0 discarded</TextStyled>
       ) : (
@@ -75,13 +100,9 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
           ?
         </TextStyled>
       )}
+      <CardFront card={last(cardsDiscarded)} marginTop={cardMarginTop} />
     </Wrapper>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default DeckComponent;

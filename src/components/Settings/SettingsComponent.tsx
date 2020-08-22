@@ -53,8 +53,16 @@ const Settings: React.FC<SettingsProps> = () => {
       onCancel={() => togglePage(ConfigPages.SETTINGS)}
       footer={
         <FooterText>
-          Made with ♥️ by{' '}
-          <a target="_blank" href="https://github.com/owenr88">
+          Made with{' '}
+          <span role="img" aria-label="heart">
+            ♥️
+          </span>{' '}
+          by{' '}
+          <a
+            target="_blank"
+            href="https://github.com/owenr88"
+            rel="noopener noreferrer"
+          >
             Owen
           </a>
         </FooterText>

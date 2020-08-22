@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 
 import './styles/app.less';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import theme from './styles/theme';
 import { DataContextProvider } from './data/DataContext';

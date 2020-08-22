@@ -9,6 +9,7 @@ import { ConfigPages, DeckType } from '../../../types';
 import DrawerContext from '../../../data/DrawerContext';
 import DataContext from '../../../data/DataContext';
 import { possibleDeckColors } from '../../../styles/theme';
+import { useWindowWidth } from '../../../hooks/useWindowSize';
 
 interface DrawerDecksProps {}
 
@@ -132,6 +133,7 @@ const DeckDrawerListItem: React.FC<DeckDrawerListItemProps> = ({
 };
 
 const DrawerDecks: React.FC<DrawerDecksProps> = () => {
+  const width = useWindowWidth();
   const { pages, hasPage, togglePage } = useContext(DrawerContext);
   const { decks, createDeck } = useContext(DataContext);
   const [numberColorPicker, setNumberColorPicker] = useState<number | null>(
@@ -164,7 +166,7 @@ const DrawerDecks: React.FC<DrawerDecksProps> = () => {
     <Drawer
       title="Decks"
       placement="left"
-      width={'40%'}
+      width={width < 680 ? '95%' : '40%'}
       closable={true}
       visible={hasPage(ConfigPages.DECKS)}
       onClose={() => togglePage(ConfigPages.DECKS)}
