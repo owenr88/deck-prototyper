@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { without, last, random } from 'lodash';
+import { last, random } from 'lodash';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 

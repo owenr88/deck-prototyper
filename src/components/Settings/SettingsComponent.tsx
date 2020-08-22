@@ -3,7 +3,6 @@ import { Modal, Upload, message, Divider, Typography, Button } from 'antd';
 import { ImportOutlined } from '@ant-design/icons';
 
 import { ConfigPages } from '../../types';
-import DataContext from '../../data/DataContext';
 import DrawerContext from '../../data/DrawerContext';
 
 import useImport from '../../hooks/useImport';

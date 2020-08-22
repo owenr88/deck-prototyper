@@ -33,7 +33,7 @@ const transformCardDecksToString = (
  * Hook to export data from the app
  */
 const useExport = (): UseExportOutput => {
-  const { decks, cards, getCardDeckNames } = useContext(DataContext);
+  const { cards, getCardDeckNames } = useContext(DataContext);
   const [exporting, setExporting] = useState(false);
 
   const exportData = async () => {

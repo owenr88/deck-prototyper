@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { without } from 'lodash';
 
 import { ConfigPages } from '../../types';

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Drawer, Table, Tag, Typography, Input, Divider } from 'antd';
+import { Drawer, Table, Tag, Typography, Input } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import styled, { DefaultTheme } from 'styled-components';
 
@@ -36,7 +36,7 @@ interface DrawerDecksProps {}
 
 const DrawerData: React.FC<DrawerDecksProps> = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { cards, decks, findDeck, updateCardField } = useContext(DataContext);
+  const { cards, decks, updateCardField } = useContext(DataContext);
   const { pages, hasPage, togglePage } = useContext(DrawerContext);
 
   // const getCardDeckData = (deckData: CardDecks): DeckType[] => {

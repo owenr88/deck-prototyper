@@ -5,7 +5,7 @@ import { TwitterPicker } from 'react-color';
 import styled from 'styled-components';
 import faker from 'faker';
 
-import { ConfigPages, DeckType, CardType } from '../../../types';
+import { ConfigPages, DeckType } from '../../../types';
 import DrawerContext from '../../../data/DrawerContext';
 import DataContext from '../../../data/DataContext';
 import { possibleDeckColors } from '../../../styles/theme';
