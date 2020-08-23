@@ -20,7 +20,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
-          unreleased: true
 
       - name: Commit changelog
         uses: EndBug/add-and-commit@v4
