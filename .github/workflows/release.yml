@@ -21,21 +21,25 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
 
+      - name: Remove tag
+        run: git tag -d ${{ github.ref }}
+
+      - name: Generate recent changelog
+        id: recent_changelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          unreleasedOnly: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Commit changelog and update tag
         uses: EndBug/add-and-commit@v4
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
           tag: ${{ github.ref }} # Update the tag
+          ref: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate recent changelog
-        id: recent_changelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
-        with:
-          onlyLastTag: true
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
