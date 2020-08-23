@@ -26,7 +26,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
-          unreleased: true
           futureRelease: ${{ steps.get_version.outputs.group1 }}
 
       - name: Commit changelog
