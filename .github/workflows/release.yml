@@ -29,12 +29,6 @@ jobs:
       - name: Remove tag
         run: git tag -d ${{ steps.get_version.outputs.VERSION }}
 
-      - name: Generate recent changelog
-        id: recent_changelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Commit changelog and update tag
         uses: EndBug/add-and-commit@v4
         with:
@@ -44,8 +38,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Add the tag again
-        run: git tag ${{ steps.get_version.outputs.VERSION }}
+      # - name: Add the tag again
+      #   run: git tag ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Generate recent changelog
+        id: recent_changelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          sinceTag: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
