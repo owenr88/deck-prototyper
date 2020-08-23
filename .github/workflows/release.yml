@@ -23,7 +23,7 @@ jobs:
 
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/branches\//}
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/branches\/release\//}
 
       - name: Create Release
         id: create_release
