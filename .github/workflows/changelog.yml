@@ -2,7 +2,7 @@ on:
   pull_request:
     types: [opened, reopened]
     branches:
-      - 'releases/**'
+      - main
 
 name: Create Changelog
 
@@ -27,6 +27,6 @@ jobs:
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          ref: ${{ github.ref }} # The branch
+          ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
