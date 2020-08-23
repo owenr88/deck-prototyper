@@ -78,8 +78,6 @@ const DeckComponent: React.FC<DeckComponentsProps> = ({ deck }) => {
     setCardMarginTop(withMinimum);
   }, [cardMarginTop, height]);
 
-  console.log('cardMarginTop', cardMarginTop);
-
   return (
     <Wrapper>
       {!cardsDiscarded.length ? (
