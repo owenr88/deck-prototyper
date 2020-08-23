@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [closed]
+    types: [opened]
     branches:
       - main
 
@@ -22,15 +22,11 @@ jobs:
           output: CHANGELOG.md
           unreleasedOnly: false
 
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
-      - name: Commit changelog and update tag
+      - name: Commit changelog
         uses: EndBug/add-and-commit@v4
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          ref: main
+          ref: ${{ github.ref }} # The branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
