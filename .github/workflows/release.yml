@@ -20,6 +20,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
+          unreleasedOnly: false
 
       - name: Get the version
         id: get_version
@@ -32,7 +33,6 @@ jobs:
         id: recent_changelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
-          unreleasedOnly: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit changelog and update tag
@@ -40,10 +40,12 @@ jobs:
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          tag: ${{ steps.get_version.outputs.VERSION }} # Update the tag
           ref: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add the tag again
+        run: git tag ${{ steps.get_version.outputs.VERSION }}
 
       - name: Create Release
         id: create_release
