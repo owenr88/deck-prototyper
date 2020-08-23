@@ -11,15 +11,31 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Generate changelog
-        id: generateRecentChangelog
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate full changelog
+        id: generateChangelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          unreleasedOnly: true
+          output: CHANGELOG.md
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Commit changelog and update tag
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: CHANGELOG.md
+          message: 'Updated changelog'
+          tag: ${{ github.ref }} # Update the tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate recent changelog
+        id: recent_changelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          onlyLastTag: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
@@ -29,13 +45,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ steps.generateRecentChangelog.outputs.changelog }}
+          body: |
+            ${{ steps.recent_changelog.outputs.changelog }}
           draft: false
           prerelease: false
-
-      - name: Generate full changelog
-        id: generateChangelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output: CHANGELOG.md
