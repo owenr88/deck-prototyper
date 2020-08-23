@@ -88,7 +88,10 @@ const Settings: React.FC<SettingsProps> = () => {
       </Upload.Dragger>
       <Typography.Paragraph style={{ marginTop: 24 }}>
         Download the{' '}
-        <a href="/sample.csv" download="deck-prototyper-sample">
+        <a
+          href={process.env.PUBLIC_URL + '/sample.csv'}
+          download="deck-prototyper-sample"
+        >
           sample CSV
         </a>{' '}
         file to get a feel for the data structure.{' '}
