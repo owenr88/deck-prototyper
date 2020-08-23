@@ -26,7 +26,7 @@ jobs:
         id: get_version
         with:
           text: ${{ github.event.pull_request.head.ref }}
-          regex: '\/release\/(v\d+\.\d+\.\d+)'
+          regex: 'releases?\/(v\d+\.\d+\.\d+)'
 
       - name: Create Release
         if: ${{ steps.get_version.outputs.match != '' }}
