@@ -4,6 +4,7 @@ import { min } from 'lodash';
 
 import DataContext from '../../data/DataContext';
 import Deck from '../Deck';
+import NoDecks from '../NoDecks';
 import { DeckType } from '../../types';
 import { useWindowWidth } from '../../hooks/useWindowSize';
 import styled from 'styled-components';
@@ -42,6 +43,10 @@ const CardPreviewer: React.FC<CardPreviewerProps> = () => {
     slidesToScroll: toShow,
     initialSlide: 0,
   };
+
+  if (!decks.length) {
+    return <NoDecks />;
+  }
 
   return (
     <SliderStyled {...settings}>

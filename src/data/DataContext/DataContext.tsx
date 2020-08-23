@@ -89,10 +89,10 @@ const DataContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
   const generateRandomData = () => {
     setFetching(true);
-    const decks = makeDecks(3);
+    const decks = makeDecks(5);
     saveDecks(decks);
     setDecks(decks);
-    const cards = makeCards(10, decks);
+    const cards = makeCards(20, decks);
     saveCards(cards);
     setCards(cards);
     setFetching(false);
