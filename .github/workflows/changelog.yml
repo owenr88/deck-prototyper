@@ -20,13 +20,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
-          unreleasedOnly: false
 
       - name: Commit changelog
         uses: EndBug/add-and-commit@v4
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
+          tag: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

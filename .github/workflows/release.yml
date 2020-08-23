@@ -19,7 +19,8 @@ jobs:
         id: recent_changelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
-          sinceTag: ${{ github.event.pull_request.head.ref }}
+          # unreleasedOnly: true
+          unreleased: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-regex-match@v2
