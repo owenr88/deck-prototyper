@@ -19,8 +19,8 @@ const NoDecks: React.FC<any> = () => {
         </span>
       </Typography.Title>
       <Typography.Paragraph>
-        This tool has been designed to quickly create a deck of cards for
-        prototyping your new board game, card game or any table top game.
+        This tool has been designed to quickly create and use decks of cards for
+        prototyping your new table top game.
       </Typography.Paragraph>
       <Typography.Paragraph>
         Click the cog below to upload a CSV of your cards, or click the question
