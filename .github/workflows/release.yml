@@ -20,26 +20,33 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
+          unreleasedOnly: false
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Remove tag
-        run: git tag -d ${{ github.ref }}
-
-      - name: Generate recent changelog
-        id: recent_changelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
-        with:
-          unreleasedOnly: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: git tag -d ${{ steps.get_version.outputs.VERSION }}
 
       - name: Commit changelog and update tag
         uses: EndBug/add-and-commit@v4
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          tag: ${{ github.ref }} # Update the tag
           ref: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Add the tag again
+      #   run: git tag ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Generate recent changelog
+        id: recent_changelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          sinceTag: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
