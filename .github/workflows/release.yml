@@ -19,8 +19,9 @@ jobs:
         id: recent_changelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
-          # unreleasedOnly: true
-          unreleased: true
+          futureRelease: ${{ steps.get_version.outputs.group1 }}
+          unreleasedOnly: true
+          # unreleased: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-regex-match@v2
