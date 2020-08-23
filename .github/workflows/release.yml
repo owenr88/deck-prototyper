@@ -12,14 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate changelog
-        id: generateChangelog
+        id: generateRecentChangelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           unreleasedOnly: true
-        
+
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -28,6 +29,13 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: echo "${ steps.generateChangelog.outputs.changelog }"
+          body: ${{ steps.generateRecentChangelog.outputs.changelog }}
           draft: false
           prerelease: false
+
+      - name: Generate full changelog
+        id: generateChangelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.md
