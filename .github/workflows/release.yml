@@ -21,8 +21,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: Remove tag
-        run: git tag -d ${{ github.ref }}
+        run: git tag -d ${{ steps.get_version.outputs.VERSION }}
 
       - name: Generate recent changelog
         id: recent_changelog
@@ -36,7 +40,7 @@ jobs:
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          tag: ${{ github.ref }} # Update the tag
+          tag: ${{ steps.get_version.outputs.VERSION }} # Update the tag
           ref: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
