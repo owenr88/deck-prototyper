@@ -8,7 +8,6 @@ name: Create Release
 
 jobs:
   build:
-    if: github.event.pull_request.merged == 'true'
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -22,14 +21,18 @@ jobs:
           sinceTag: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/branches\/release\//}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.pull_request.head.ref }}
-          release_name: Release ${{ github.event.pull_request.head.ref }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          release_name: Release ${{ steps.get_version.outputs.VERSION }}
           body: |
             ${{ steps.recent_changelog.outputs.changelog }}
           draft: false

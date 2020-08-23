@@ -27,7 +27,6 @@ jobs:
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          # ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
-          tag: ''
+          ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

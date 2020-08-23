@@ -1,7 +1,5 @@
 # Changelog
 
-## [v1.0.11](https://github.com/owenr88/deck-prototyper/tree/v1.0.11) (2020-08-23)
-
 ## [v1.0.10](https://github.com/owenr88/deck-prototyper/tree/v1.0.10) (2020-08-23)
 
 ## [v1.0.8](https://github.com/owenr88/deck-prototyper/tree/v1.0.8) (2020-08-23)
