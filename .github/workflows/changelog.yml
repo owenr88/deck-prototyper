@@ -14,20 +14,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: get_version
+        with:
+          text: ${{ github.event.pull_request.head.ref }}
+          regex: 'releases?\/(v\d+\.\d+\.\d+)'
+
       - name: Generate full changelog
         id: generateChangelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
-          unreleasedOnly: false
+          futureRelease: ${{ steps.get_version.outputs.group1 }}
 
       - name: Commit changelog
         uses: EndBug/add-and-commit@v4
         with:
           add: CHANGELOG.md
           message: 'Updated changelog'
-          # ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
           tag: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

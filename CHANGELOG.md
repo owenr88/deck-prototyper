@@ -1,6 +1,8 @@
 # Changelog
 
-## [refs/pull/19/merge](https://github.com/owenr88/deck-prototyper/tree/refs/pull/19/merge) (2020-08-23)
+## [v1.0.13](https://github.com/owenr88/deck-prototyper/tree/v1.0.13) (2020-08-23)
+
+## [v1.0.12](https://github.com/owenr88/deck-prototyper/tree/v1.0.12) (2020-08-23)
 
 ## [v1.0.11](https://github.com/owenr88/deck-prototyper/tree/v1.0.11) (2020-08-23)
 
