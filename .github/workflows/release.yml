@@ -20,6 +20,7 @@ jobs:
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
         with:
           # unreleasedOnly: true
+          unreleased: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-regex-match@v2
