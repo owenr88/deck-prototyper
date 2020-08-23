@@ -1,7 +1,8 @@
 on:
-  push:
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 name: Create Release
 
@@ -20,13 +21,17 @@ jobs:
           sinceTag: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/branches\/release\//}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
           release_name: Release ${{ github.ref }}
           body: |
             ${{ steps.recent_changelog.outputs.changelog }}
