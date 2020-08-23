@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
     branches:
       - main
 
@@ -28,5 +28,6 @@ jobs:
           add: CHANGELOG.md
           message: 'Updated changelog'
           ref: ${{ github.event.pull_request.head.ref }} # The HEAD branch
+          tag: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
