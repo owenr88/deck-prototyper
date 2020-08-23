@@ -1,0 +1,36 @@
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+name: Create Changelog
+
+jobs:
+  build:
+    name: Create Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate full changelog
+        id: generateChangelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.md
+          unreleasedOnly: false
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Commit changelog and update tag
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: CHANGELOG.md
+          message: 'Updated changelog'
+          ref: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
