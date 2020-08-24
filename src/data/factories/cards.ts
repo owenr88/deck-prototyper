@@ -11,9 +11,9 @@ export const makeCards = (total: number = 1, decks: DeckType[]): CardType[] => {
     });
     return {
       number: i + 1,
-      title: i + ': ' + faker.lorem.words(3),
-      body1: faker.lorem.sentence(),
-      body2: faker.lorem.sentence(),
+      title: i + ': ' + faker.lorem.words(2),
+      body1: faker.lorem.words(8),
+      body2: faker.lorem.words(5),
       decks: deckData,
     };
   });
