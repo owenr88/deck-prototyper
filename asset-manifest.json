@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/deck-prototyper/static/css/main.b13c879a.chunk.css",
-    "main.js": "/deck-prototyper/static/js/main.45d1544e.chunk.js",
-    "main.js.map": "/deck-prototyper/static/js/main.45d1544e.chunk.js.map",
+    "main.css": "/deck-prototyper/static/css/main.c22d0ef0.chunk.css",
+    "main.js": "/deck-prototyper/static/js/main.adbde0da.chunk.js",
+    "main.js.map": "/deck-prototyper/static/js/main.adbde0da.chunk.js.map",
     "runtime-main.js": "/deck-prototyper/static/js/runtime-main.a579b5bc.js",
     "runtime-main.js.map": "/deck-prototyper/static/js/runtime-main.a579b5bc.js.map",
     "static/css/2.948d2df7.chunk.css": "/deck-prototyper/static/css/2.948d2df7.chunk.css",
-    "static/js/2.39a7ee42.chunk.js": "/deck-prototyper/static/js/2.39a7ee42.chunk.js",
-    "static/js/2.39a7ee42.chunk.js.map": "/deck-prototyper/static/js/2.39a7ee42.chunk.js.map",
+    "static/js/2.171ea95e.chunk.js": "/deck-prototyper/static/js/2.171ea95e.chunk.js",
+    "static/js/2.171ea95e.chunk.js.map": "/deck-prototyper/static/js/2.171ea95e.chunk.js.map",
     "index.html": "/deck-prototyper/index.html",
-    "precache-manifest.55c8f291f94c7dcc58f3dba7657a72c7.js": "/deck-prototyper/precache-manifest.55c8f291f94c7dcc58f3dba7657a72c7.js",
+    "precache-manifest.42af6a6f58ff38e361fb0ef6911e50f3.js": "/deck-prototyper/precache-manifest.42af6a6f58ff38e361fb0ef6911e50f3.js",
     "service-worker.js": "/deck-prototyper/service-worker.js",
     "static/css/2.948d2df7.chunk.css.map": "/deck-prototyper/static/css/2.948d2df7.chunk.css.map",
-    "static/css/main.b13c879a.chunk.css.map": "/deck-prototyper/static/css/main.b13c879a.chunk.css.map",
-    "static/js/2.39a7ee42.chunk.js.LICENSE.txt": "/deck-prototyper/static/js/2.39a7ee42.chunk.js.LICENSE.txt",
+    "static/css/main.c22d0ef0.chunk.css.map": "/deck-prototyper/static/css/main.c22d0ef0.chunk.css.map",
+    "static/js/2.171ea95e.chunk.js.LICENSE.txt": "/deck-prototyper/static/js/2.171ea95e.chunk.js.LICENSE.txt",
     "static/media/slick-theme.css": "/deck-prototyper/static/media/slick.f97e3bbf.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.a579b5bc.js",
     "static/css/2.948d2df7.chunk.css",
-    "static/js/2.39a7ee42.chunk.js",
-    "static/css/main.b13c879a.chunk.css",
-    "static/js/main.45d1544e.chunk.js"
+    "static/js/2.171ea95e.chunk.js",
+    "static/css/main.c22d0ef0.chunk.css",
+    "static/js/main.adbde0da.chunk.js"
   ]
 }
