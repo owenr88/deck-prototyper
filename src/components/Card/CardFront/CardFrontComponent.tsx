@@ -23,7 +23,9 @@ const Number = styled(Typography.Text)`
   top: 5px;
   right: 5px;
 `;
-const Text = styled(Typography.Paragraph)``;
+const Text = styled(Typography.Paragraph)`
+  font-size: 14px;
+`;
 
 interface CardFrontProps {
   card?: CardType;

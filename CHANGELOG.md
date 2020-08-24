@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.14](https://github.com/owenr88/deck-prototyper/tree/v1.0.14) (2020-08-23)
+
+**Fixed bugs:**
+
+- Release action doesn't fetch recent issues [\#24](https://github.com/owenr88/deck-prototyper/issues/24)
+
 ## [v1.0.13](https://github.com/owenr88/deck-prototyper/tree/v1.0.13) (2020-08-23)
 
 ## [v1.0.12](https://github.com/owenr88/deck-prototyper/tree/v1.0.12) (2020-08-23)

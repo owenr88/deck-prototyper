@@ -31,6 +31,7 @@ const Text = styled(Typography.Paragraph)<TextProps>`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-size: 14px;
 `;
 
 interface CardBackProps {

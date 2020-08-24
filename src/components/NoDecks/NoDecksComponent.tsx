@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
+import { SettingOutlined } from '@ant-design/icons';
+
+import { ConfigPages } from '../../types/index';
+import DrawerContext from '../../data/DrawerContext/index';
+import GenerateRandomIcon from '../GenerateRandomIcon';
 
 const NoDecksStyled = styled.div`
   display: flex;
@@ -10,6 +15,8 @@ const NoDecksStyled = styled.div`
 `;
 
 const NoDecks: React.FC<any> = () => {
+  const { togglePage } = useContext(DrawerContext);
+
   return (
     <NoDecksStyled>
       <Typography.Title level={3}>
@@ -23,8 +30,10 @@ const NoDecks: React.FC<any> = () => {
         prototyping your new table top game.
       </Typography.Paragraph>
       <Typography.Paragraph>
-        Click the cog below to upload a CSV of your cards, or click the question
-        mark to generate some random decks to get started.
+        Click{' '}
+        <SettingOutlined onClick={() => togglePage(ConfigPages.SETTINGS)} /> to
+        upload a CSV of your cards, or <GenerateRandomIcon /> to generate some
+        random decks to get started.
       </Typography.Paragraph>
     </NoDecksStyled>
   );
