@@ -3,14 +3,12 @@ import styled from 'styled-components';
 import {
   OrderedListOutlined,
   SettingOutlined,
-  QuestionCircleOutlined,
   BookOutlined,
 } from '@ant-design/icons';
-import { Tooltip, Popconfirm } from 'antd';
 
 import { ConfigPages } from '../../types';
 import DrawerContext from '../../data/DrawerContext';
-import DataContext from '../../data/DataContext';
+import GenerateRandomIcon from '../GenerateRandomIcon';
 
 type TopProps = {
   open: boolean;
@@ -39,7 +37,6 @@ interface NavProps {}
 
 const NavComponent: React.FC<NavProps> = () => {
   const { hasPage, togglePage } = useContext(DrawerContext);
-  const { generateRandomData, hasImported } = useContext(DataContext);
 
   return (
     <Top open={hasPage(ConfigPages.DATA)}>
@@ -53,22 +50,7 @@ const NavComponent: React.FC<NavProps> = () => {
         <SettingOutlined onClick={() => togglePage(ConfigPages.SETTINGS)} />
       </IconItem>
       <IconItem>
-        <Tooltip title="Generate random data" placement="top">
-          {hasImported ? (
-            <Popconfirm
-              title="Generating random data will override any data you imported already. Are you sure?"
-              onConfirm={() => generateRandomData()}
-              onCancel={() => {}}
-              okText="Yes"
-              cancelText="No"
-              // disabled={!importedOwnCards}
-            >
-              <QuestionCircleOutlined />
-            </Popconfirm>
-          ) : (
-            <QuestionCircleOutlined onClick={() => generateRandomData()} />
-          )}
-        </Tooltip>
+        <GenerateRandomIcon />
       </IconItem>
     </Top>
   );
