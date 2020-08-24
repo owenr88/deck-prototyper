@@ -14,7 +14,7 @@ module.exports = {
               '@secondary-color': colors.secondary,
               '@link-color': colors.primary,
               '@font-family': '\'EB Garamond\', serif',
-              '@font-size-base': '12px',
+              '@font-size-base': '16px',
               '@card-radius': '10px',
              },
             javascriptEnabled: true,
